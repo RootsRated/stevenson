@@ -2,10 +2,16 @@
 
 require 'stevenson'
 
+HYDE_URL = 'https://github.com/RootsRated/hyde.git'
+
 hw = Stevenson::Console.new
 
 if ARGV.empty?
   puts 'You must provide a name for the new project, e.g. stevenson RiverRocks'
+elsif ARGV.count == 1
+  hw.create ARGV[0], HYDE_URL
+elsif ARGV.count == 2
+  hw.create ARGV[0], ARGV[1]
 else
-  hw.create ARGV[0]
+  puts 'You have too many arguments. Please use stevenson like so: stevenson ProjectName TemplateURL'
 end

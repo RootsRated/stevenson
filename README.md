@@ -31,7 +31,40 @@ Use Stevenson to create a new microsite by calling it like this:
     $ stevenson NameOfYourSite
 
 This will create a new directory in your current working directory called
-`name_of_your_site`. This directory should be a ready-to-use 
+`name_of_your_site`. This directory should be a ready-to-use Jekyll
+installation.
+
+By default, stevenson will use RootsRated's
+[Hyde](https://github.com/rootsrated/hyde) repo as the template for the new
+site, but alternative templates can be used by passing a second argument to
+`stevenson`, like so:
+
+    $ stevenson NameOfYourSite https://github.com/your-username/your-template.git
+
+This will clone the repo at `https://github.com/your-username/your-template.git`
+to `name_of_your_site` and begin altering the repo based on the contents of a
+yaml file in your template's root directory named `_stevenson.yml`. This file
+should contain config options to be set in the `_config.yml` of your Jekyll
+installation along with information on whether these options should be secret,
+validated as emails, validated as URLs, or limited to a certain length. Here's
+an example:
+
+    title:
+      question: 'Title: '
+    email:
+      question: 'Email: '
+      email: true
+    description:
+      question: 'Description: '
+    url:
+      question: 'URL: '
+      url: true
+
+**The 'question' of each option is required** and will be used to ask users for
+input to replace these values.
+
+Any values already set in the `_config.yml` will be used as defaults for these
+questions.
 
 ## Contributing
 
