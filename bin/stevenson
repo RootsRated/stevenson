@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'stevenson'
+
+hw = Stevenson::HelloWorld.new
+hw.say_hello
