@@ -5,7 +5,7 @@ require "stevenson/version"
 require "yaml"
 
 module Stevenson
-  HYDE_URL = 'https://github.com/dylankarr/textNooga.git'
+  HYDE_URL = 'https://github.com/RootsRated/hyde.git'
 
   class Console
     def create(project_name)
