@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport"
   spec.add_dependency "git"
+  spec.add_dependency "highline"
 end
