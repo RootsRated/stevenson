@@ -12,11 +12,9 @@ module Stevenson
       directory_name = project_name.underscore
       Git::Base.clone template_url, directory_name
 
-      directory_name = '../hyde'
-
       # Load config options from the directory
-      options = YAML.load_file "#{directory_name}/_stevenson.yml"
-      config = YAML.load_file "#{directory_name}/_config.yml"
+      options = load_options directory_name
+      config = load_config directory_name
 
       # For each option, ask the user for input
       options.each do |key, value|
@@ -26,6 +24,28 @@ module Stevenson
       # Save the updated config back to the directory
       File.open("#{directory_name}/_config.yml", 'w') do |f|
         f.write config.to_yaml
+      end
+    end
+
+    def load_options(directory_name)
+      if File.file? "#{directory_name}/_stevenson.yml"
+        YAML.load_file "#{directory_name}/_stevenson.yml"
+      elsif File.file? "#{directory_name}/.stevenson.yml"
+        YAML.load_file "#{directory_name}/.stevenson.yml"
+      elsif File.file? "#{directory_name}/.stevenson"
+        YAML.load_file "#{directory_name}/.stevenson"
+      else
+        say 'No _stevenson.yml file could be found in this template.'
+        exit
+      end
+    end
+
+    def load_config(directory_name)
+      if File.file? "#{directory_name}/_config.yml"
+        YAML.load_file "#{directory_name}/_config.yml"
+      else
+        say 'No _config.yml file could be found in this template.'
+        exit
       end
     end
 

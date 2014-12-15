@@ -43,11 +43,11 @@ site, but alternative templates can be used by passing a second argument to
 
 This will clone the repo at `https://github.com/your-username/your-template.git`
 to `name_of_your_site` and begin altering the repo based on the contents of a
-yaml file in your template's root directory named `_stevenson.yml`. This file
-should contain config options to be set in the `_config.yml` of your Jekyll
-installation along with information on whether these options should be secret,
-validated as emails, validated as URLs, or limited to a certain length. Here's
-an example:
+yaml file in your template's root directory named `_stevenson.yml`,
+`.stevenson.yml` or `.stevenson`. This file should contain config options to be
+set in the `_config.yml` of your Jekyll installation along with information on
+whether these options should be secret, validated as emails, validated as URLs,
+or limited to a certain length. Here's an example:
 
     title:
       question: 'Title: '
