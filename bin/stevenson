@@ -2,5 +2,10 @@
 
 require 'stevenson'
 
-hw = Stevenson::HelloWorld.new
-hw.say_hello
+hw = Stevenson::Console.new
+
+if ARGV.empty?
+  puts 'You must provide a name for the new project, e.g. stevenson RiverRocks'
+else
+  hw.create ARGV[0]
+end
