@@ -5,13 +5,14 @@ require "stevenson/version"
 require "yaml"
 
 module Stevenson
-  HYDE_URL = 'https://github.com/RootsRated/hyde.git'
 
   class Console
-    def create(project_name)
+    def create(project_name, template_url)
       # Git clone the Hyde repo to the given directory
       directory_name = project_name.underscore
-      Git::Base.clone HYDE_URL, directory_name
+      Git::Base.clone template_url, directory_name
+
+      directory_name = '../hyde'
 
       # Load config options from the directory
       options = YAML.load_file "#{directory_name}/_stevenson.yml"
