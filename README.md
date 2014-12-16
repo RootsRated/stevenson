@@ -28,7 +28,7 @@ Or install it yourself with:
 
 Use Stevenson to create a new microsite like this:
 
-    $ stevenson NameOfYourSite
+    $ stevenson new NameOfYourSite
 
 This will create a new directory in your current working directory named
 `name_of_your_site`. This directory should be a ready-to-use Jekyll
@@ -36,10 +36,10 @@ installation.
 
 By default, stevenson will use RootsRated's
 [Hyde](https://github.com/rootsrated/hyde) repo as the template for the new
-site, but alternative templates can be used by passing a second argument to
+site, but alternative templates can be used by passing a thrid argument to
 `stevenson`, like so:
 
-    $ stevenson NameOfYourSite https://github.com/YourUsername/YourTemplate.git
+    $ stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git
 
 This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
 to `name_of_your_site` and begin altering the repo based on the contents of a
@@ -65,10 +65,10 @@ Here's an example of the YAML file:
       url: true
 
 This file will produce the following questions when
-`stevenson NameOfYourSite https://github.com/YourUsername/YourTemplate.git` is
+`stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git` is
 used:
 
-    $ stevenson NameOfYourSite https://github.com/YourUsername/YourTemplate.git
+    $ stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git
     Title: My Site
     Email: info@example.org
     Description: Lorem Ipsum...
