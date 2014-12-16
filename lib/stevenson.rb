@@ -39,10 +39,6 @@ module Stevenson
     def load_options(directory_name)
       if File.file? "#{directory_name}/_stevenson.yml"
         YAML.load_file "#{directory_name}/_stevenson.yml"
-      elsif File.file? "#{directory_name}/.stevenson.yml"
-        YAML.load_file "#{directory_name}/.stevenson.yml"
-      elsif File.file? "#{directory_name}/.stevenson"
-        YAML.load_file "#{directory_name}/.stevenson"
       else
         say 'No _stevenson.yml file could be found in this template.'
         exit
