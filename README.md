@@ -28,21 +28,21 @@ Or install it yourself with:
 
 Use Stevenson to create a new microsite like this:
 
-    $ stevenson new NameOfYourSite
+    $ stevenson new your_site
 
 This will create a new directory in your current working directory named
-`name_of_your_site`. This directory should be a ready-to-use Jekyll
+`your_site`. This directory should be a ready-to-use Jekyll
 installation.
 
 By default, stevenson will use RootsRated's
 [Hyde](https://github.com/rootsrated/hyde) repo as the template for the new
-site, but alternative templates can be used by passing a thrid argument to
-`stevenson`, like so:
+site, but alternative templates can be used with the `--template` or `-t`
+option, like so:
 
-    $ stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git
+    $ stevenson new your_site -t https://github.com/YourUsername/YourTemplate.git
 
 This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
-to `name_of_your_site` and begin altering the repo based on the contents of a
+to `your_site` and begin altering the repo based on the contents of a
 YAML file in your template's root directory named `_stevenson.yml`,
 `.stevenson.yml` or `.stevenson`. This file should contain config options to be
 set in the `_config.yml` of your Jekyll installation along with information on
@@ -68,14 +68,14 @@ This file will produce the following questions when
 `stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git` is
 used:
 
-    $ stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git
+    $ stevenson new NameOfYourSite -t https://github.com/YourUsername/YourTemplate.git
     Title: My Site
     Email: info@example.org
     Description: Lorem Ipsum...
     URL: http://www.example.org
 
 When these questions are answered, the following will be added to
-`name_of_your_site/_config.yml`:
+`your_site/_config.yml`:
 
     #_config.yml
     title: RootsRated.com
