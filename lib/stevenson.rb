@@ -37,18 +37,22 @@ module Stevenson
     private
 
     def load_options(directory_name)
+      # If a _stevenson.yml file is present, load it
       if File.file? "#{directory_name}/_stevenson.yml"
         YAML.load_file "#{directory_name}/_stevenson.yml"
       else
+        # Otherwise, output an error and exit
         say 'No _stevenson.yml file could be found in this template.'
         exit
       end
     end
 
     def load_config(directory_name)
+      # If a _config.yml file is present, load it
       if File.file? "#{directory_name}/_config.yml"
         YAML.load_file "#{directory_name}/_config.yml"
       else
+        # Otherwise, output an error and exit
         say 'No _config.yml file could be found in this template.'
         exit
       end
