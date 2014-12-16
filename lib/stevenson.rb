@@ -1,6 +1,6 @@
 require 'active_support/all'
-require 'git'
 require 'highline/import'
+require 'stevenson/template_loaders/git_loader'
 require 'stevenson/version'
 require 'thor'
 require 'yaml'
@@ -12,29 +12,41 @@ module Stevenson
 
     method_option :template,
                   aliases: '-t',
-                  default: 'https://github.com/RootsRated/hyde.git',
+                  default: 'https://github.com/RootsRated/stevenson-base-template.git',
                   desc: 'The template repository to use'
 
-    def new(directory_name)
-      # Git clone the Hyde repo to the given directory
-      Git::Base.clone options[:template], directory_name
+    def new(output_directory)
+      # Load the Template to Use
+      template_directory = load_template
 
       # Load config options from the directory
-      options = load_options directory_name
-      config = load_config directory_name
+      options = load_options template_directory
+      config = load_config template_directory
 
-      # For each option, ask the user for input
-      options.each do |key, value|
-        config[key] = ask_question value, config[key]
+      # If there are any options, for each option, ask the user for input
+      if options
+        options.each do |key, value|
+          config[key] = ask_question value, config[key]
+        end
       end
 
       # Save the updated config back to the directory
-      File.open("#{directory_name}/_config.yml", 'w') do |f|
+      File.open("#{template_directory}/_config.yml", 'w') do |f|
         f.write config.to_yaml
       end
+
+      # Copy the tempory directory to the output_directory and cleanup
+      FileUtils.copy_entry template_directory, output_directory
+      FileUtils.remove_entry_secure template_directory
     end
 
     private
+
+    def load_template
+      # Use the GitLoader to clone the template repo to a temporary directory
+      loader = Stevenson::TemplateLoaders::GitLoader.new options[:template]
+      loader.load
+    end
 
     def load_options(directory_name)
       # If a _stevenson.yml file is present, load it
