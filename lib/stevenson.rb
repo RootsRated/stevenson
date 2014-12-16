@@ -1,6 +1,6 @@
 require 'active_support/all'
 require 'highline/import'
-require 'stevenson/template_loaders/git_loader'
+require 'stevenson/templates/git_template'
 require 'stevenson/version'
 require 'thor'
 require 'yaml'
@@ -16,37 +16,39 @@ module Stevenson
                   desc: 'The template repository to use'
 
     def new(output_directory)
-      # Load the Template to Use
-      template_directory = load_template
+      # Load the GitTemplate using the template option
+      template = Stevenson::Template::GitTemplate.new options[:template]
 
-      # Load config options from the directory
-      options = load_options template_directory
-      config = load_config template_directory
-
-      # If there are any options, for each option, ask the user for input
-      if options
-        options.each do |key, value|
-          config[key] = ask_question value, config[key]
+      if template.is_valid?
+        template_path = template.path
+  
+        # Load config options from the template
+        options = load_options template_path
+        config = load_config template_path
+  
+        # If there are any options, for each option, ask the user for input
+        if options
+          options.each do |key, value|
+            config[key] = ask_question value, config[key]
+          end
         end
+  
+        # Save the updated config back to the directory
+        File.open("#{template_path}/_config.yml", 'w') do |f|
+          f.write config.to_yaml
+        end
+  
+        # Copy the tempory directory to the output_directory
+        FileUtils.copy_entry template_path, output_directory
+      else
+        say 'No git repository could be found at the provided URL.'
       end
 
-      # Save the updated config back to the directory
-      File.open("#{template_directory}/_config.yml", 'w') do |f|
-        f.write config.to_yaml
-      end
-
-      # Copy the tempory directory to the output_directory and cleanup
-      FileUtils.copy_entry template_directory, output_directory
-      FileUtils.remove_entry_secure template_directory
+      # Cleanup the template before exiting
+      template.cleanup
     end
 
     private
-
-    def load_template
-      # Use the GitLoader to clone the template repo to a temporary directory
-      loader = Stevenson::TemplateLoaders::GitLoader.new options[:template]
-      loader.load
-    end
 
     def load_options(directory_name)
       # If a _stevenson.yml file is present, load it
