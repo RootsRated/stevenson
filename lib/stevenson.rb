@@ -10,9 +10,14 @@ module Stevenson
   class Application < Thor
     desc 'stevenson new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
 
-    def new(directory_name, template_url='https://github.com/RootsRated/hyde.git')
+    method_option :template,
+                  aliases: '-t',
+                  default: 'https://github.com/RootsRated/hyde.git',
+                  desc: 'The template repository to use'
+
+    def new(directory_name)
       # Git clone the Hyde repo to the given directory
-      Git::Base.clone template_url, directory_name
+      Git::Base.clone options[:template], directory_name
 
       # Load config options from the directory
       options = load_options directory_name
