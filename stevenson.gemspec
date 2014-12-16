@@ -22,7 +22,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
 
-  spec.add_dependency "activesupport"
   spec.add_dependency "highline"
   spec.add_dependency "rugged"
   spec.add_dependency "thor"
