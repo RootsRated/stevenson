@@ -8,9 +8,9 @@ require 'yaml'
 module Stevenson
 
   class Application < Thor
-    desc 'stevenson PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
+    desc 'stevenson new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
 
-    def create(directory_name, template_url='https://github.com/RootsRated/hyde.git')
+    def new(directory_name, template_url='https://github.com/RootsRated/hyde.git')
       # Git clone the Hyde repo to the given directory
       Git::Base.clone template_url, directory_name
 
