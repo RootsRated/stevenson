@@ -29,10 +29,10 @@ Or install it yourself with:
 
 Use Stevenson to create a new microsite like this:
 
-    $ stevenson new your_site
+    $ stevenson new hello_world
 
 This will create a new directory in your current working directory named
-`your_site`. This directory should be a ready-to-use Jekyll
+`hello_world`. This directory should be a ready-to-use Jekyll
 installation.
 
 By default, stevenson will use RootsRated's
@@ -40,10 +40,10 @@ By default, stevenson will use RootsRated's
 site, but alternative templates can be used with the `--template` or `-t`
 option, like so:
 
-    $ stevenson new your_site -t https://github.com/YourUsername/YourTemplate.git
+    $ stevenson new hello_world -t https://github.com/YourUsername/YourTemplate.git
 
 This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
-to `your_site` and begin altering the repo based on the contents of a
+to `hello_world` and begin altering the repo based on the contents of a
 YAML file in your template's root directory named `_stevenson.yml`. This file
 should contain config options to be set in the `_config.yml` of your Jekyll
 installation along with information on whether these options should be secret,
@@ -65,7 +65,7 @@ Here's an example of the YAML file:
       url: true
 
 This file will produce the following questions when
-`stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git` is
+`stevenson new hello_world https://github.com/YourUsername/YourTemplate.git` is
 used:
 
     $ stevenson new hello_world -t https://github.com/YourUsername/YourTemplate.git
