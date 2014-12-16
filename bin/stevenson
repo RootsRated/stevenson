@@ -2,4 +2,4 @@
 
 require 'stevenson'
 
-hw = Stevenson::Application.start ARGV
+Stevenson::Application.start ARGV
