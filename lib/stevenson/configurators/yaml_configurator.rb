@@ -11,6 +11,9 @@ module Stevenson
         # Load config options from the template
         @options = load_options
         @config = load_config
+
+        # If no config is provided, set it to an empty hash
+        @config = {} unless @config
       end
 
       def configure
