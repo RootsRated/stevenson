@@ -1,9 +1,7 @@
-require 'active_support/all'
-require 'git'
-require 'highline/import'
+require 'stevenson/configurators/yaml_configurator'
+require 'stevenson/templates/git_template'
 require 'stevenson/version'
 require 'thor'
-require 'yaml'
 
 module Stevenson
 
@@ -12,68 +10,28 @@ module Stevenson
 
     method_option :template,
                   aliases: '-t',
-                  default: 'https://github.com/RootsRated/hyde.git',
+                  default: 'https://github.com/RootsRated/stevenson-base-template.git',
                   desc: 'The template repository to use'
 
-    def new(directory_name)
-      # Git clone the Hyde repo to the given directory
-      Git::Base.clone options[:template], directory_name
+    def new(output_directory)
+      # Load the GitTemplate using the template option
+      template = Stevenson::Template::GitTemplate.new options[:template]
 
-      # Load config options from the directory
-      options = load_options directory_name
-      config = load_config directory_name
+      # If the template provided is valid, configure and save the template
+      if template.is_valid?
 
-      # For each option, ask the user for input
-      options.each do |key, value|
-        config[key] = ask_question value, config[key]
-      end
-
-      # Save the updated config back to the directory
-      File.open("#{directory_name}/_config.yml", 'w') do |f|
-        f.write config.to_yaml
-      end
-    end
-
-    private
-
-    def load_options(directory_name)
-      # If a _stevenson.yml file is present, load it
-      if File.file? "#{directory_name}/_stevenson.yml"
-        YAML.load_file "#{directory_name}/_stevenson.yml"
+        # Configure the template
+        configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
+        configurator.configure
+  
+        # Copy the tempory directory to the output_directory
+        FileUtils.copy_entry template.path, output_directory
       else
-        # Otherwise, output an error and exit
-        say 'No _stevenson.yml file could be found in this template.'
-        exit
-      end
-    end
-
-    def load_config(directory_name)
-      # If a _config.yml file is present, load it
-      if File.file? "#{directory_name}/_config.yml"
-        YAML.load_file "#{directory_name}/_config.yml"
-      else
-        # Otherwise, output an error and exit
-        say 'No _config.yml file could be found in this template.'
-        exit
-      end
-    end
-
-    def ask_question(options, default_value)
-      # Load the question text and highline options hash
-      question = options['question']
-      options.delete 'question'
-
-      # Ask the user the question and apply all options
-      answer = ask(question) do |q|
-        q.default = default_value if default_value
-        q.echo = false if options['secret']
-        q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  if options['email']
-        q.validate = /https?:\/\/[\S]+/  if options['url']
-        q.limit = options['limit'] if options['limit']
+        say 'No git repository could be found at the provided URL.'
       end
 
-      # Return the user's answer
-      answer.to_s
+      # Cleanup the template before exiting
+      template.cleanup
     end
   end
 end
