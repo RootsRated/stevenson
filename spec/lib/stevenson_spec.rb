@@ -1,5 +1,5 @@
 describe Stevenson::Application do
-  describe 'new' do
+  describe '#new' do
     context 'with a valid repo' do
       let(:directory_name) { Dir.mktmpdir }
       let(:output) { capture(:stdout) { subject.new directory_name } }
@@ -16,7 +16,7 @@ describe Stevenson::Application do
       let(:output) { capture(:stdout) { subject.new directory_name } }
 
       before do
-        subject.options = { template: 'https://github.com/RootsRated/notarepo.git' }
+        subject.options = { template: 'https://github.com/RootsRated/not-a-repo.git' }
       end
 
       it 'does not create a directory at test_directory' do

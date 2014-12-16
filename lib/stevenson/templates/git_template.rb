@@ -13,6 +13,10 @@ module Stevenson
         @repo = false
       end
 
+      def repository
+        @repo
+      end
+
       def is_valid?
         # Return whether or not the repo was successfully cloned
         @repo != false
