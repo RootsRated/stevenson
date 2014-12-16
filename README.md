@@ -1,4 +1,5 @@
 # Stevenson
+[![Build Status](https://travis-ci.org/RootsRated/stevenson.png)](https://travis-ci.org/RootsRated/stevenson)
 
 Stevenson is a [Jekyll](http://jekyllrb.com) microsite generator created by
 RootsRated.com. Stevenson is named for Robert Louis Stevenson, author of *The
