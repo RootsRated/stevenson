@@ -1,4 +1,4 @@
-Copyright (c) 2014 Dylan Karr
+Copyright (c) 2014 RootsRated
 
 MIT License
 
