@@ -26,11 +26,11 @@ Or install it yourself with:
 
 ## Usage
 
-Use Stevenson to create a new microsite by calling it like this:
+Use Stevenson to create a new microsite like this:
 
     $ stevenson NameOfYourSite
 
-This will create a new directory in your current working directory called
+This will create a new directory in your current working directory named
 `name_of_your_site`. This directory should be a ready-to-use Jekyll
 installation.
 
@@ -39,18 +39,22 @@ By default, stevenson will use RootsRated's
 site, but alternative templates can be used by passing a second argument to
 `stevenson`, like so:
 
-    $ stevenson NameOfYourSite https://github.com/your-username/your-template.git
+    $ stevenson NameOfYourSite https://github.com/YourUsername/YourTemplate.git
 
-This will clone the repo at `https://github.com/your-username/your-template.git`
+This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
 to `name_of_your_site` and begin altering the repo based on the contents of a
-yaml file in your template's root directory named `_stevenson.yml`,
+YAML file in your template's root directory named `_stevenson.yml`,
 `.stevenson.yml` or `.stevenson`. This file should contain config options to be
 set in the `_config.yml` of your Jekyll installation along with information on
 whether these options should be secret, validated as emails, validated as URLs,
-or limited to a certain length. Here's an example:
+or limited to a certain length.
 
+Here's an example of the YAML file:
+
+    #_stevenson.yml
     title:
       question: 'Title: '
+      limit: 40
     email:
       question: 'Email: '
       email: true
@@ -59,6 +63,25 @@ or limited to a certain length. Here's an example:
     url:
       question: 'URL: '
       url: true
+
+This file will produce the following questions when
+`stevenson NameOfYourSite https://github.com/YourUsername/YourTemplate.git` is
+used:
+
+    $ stevenson NameOfYourSite https://github.com/YourUsername/YourTemplate.git
+    Title: My Site
+    Email: info@example.org
+    Description: Lorem Ipsum...
+    URL: http://www.example.org
+
+When these questions are answered, the following will be added to
+`name_of_your_site/_config.yml`:
+
+    #_config.yml
+    title: RootsRated.com
+    email: info@rootsrated.com
+    description: This is a microsite created by RootsRated.com
+    url: http://www.rootsrated.com
 
 **The 'question' of each option is required** and will be used to ask users for
 input to replace these values.
