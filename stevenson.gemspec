@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "stevenson"
   spec.version       = Stevenson::VERSION
   spec.authors       = ["Dylan Karr"]
-  spec.email         = ["webmaster@dylankarr.com"]
+  spec.email         = ["dylan@RootsRated.com"]
   spec.summary       = "Stevenson is a generator for Jekyll microsites created by RootsRated.com"
   spec.description   = "Stevenson is a simple generator for microsites using Jekyll"
   spec.homepage      = ""
@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 
   spec.add_dependency "activesupport"
   spec.add_dependency "git"
