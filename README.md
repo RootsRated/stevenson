@@ -68,14 +68,14 @@ This file will produce the following questions when
 `stevenson new NameOfYourSite https://github.com/YourUsername/YourTemplate.git` is
 used:
 
-    $ stevenson new NameOfYourSite -t https://github.com/YourUsername/YourTemplate.git
+    $ stevenson new hello_world -t https://github.com/YourUsername/YourTemplate.git
     Title: My Site
     Email: info@example.org
     Description: Lorem Ipsum...
     URL: http://www.example.org
 
 When these questions are answered, the following will be added to
-`your_site/_config.yml`:
+`hello_world/_config.yml`:
 
     #_config.yml
     title: RootsRated.com
