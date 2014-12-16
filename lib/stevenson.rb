@@ -1,15 +1,17 @@
-require "active_support/all"
-require "git"
-require "highline/import"
-require "stevenson/version"
-require "yaml"
+require 'active_support/all'
+require 'git'
+require 'highline/import'
+require 'stevenson/version'
+require 'thor'
+require 'yaml'
 
 module Stevenson
 
-  class Console
-    def create(project_name, template_url)
+  class Application < Thor
+    desc 'stevenson new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
+
+    def new(directory_name, template_url='https://github.com/RootsRated/hyde.git')
       # Git clone the Hyde repo to the given directory
-      directory_name = project_name.underscore
       Git::Base.clone template_url, directory_name
 
       # Load config options from the directory
@@ -26,6 +28,8 @@ module Stevenson
         f.write config.to_yaml
       end
     end
+
+    private
 
     def load_options(directory_name)
       if File.file? "#{directory_name}/_stevenson.yml"
