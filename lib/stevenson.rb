@@ -10,7 +10,7 @@ module Stevenson
 
     method_option :template,
                   aliases: '-t',
-                  default: 'https://github.com/RootsRated/stevenson-base-template.git',
+                  default: 'https://github.com/RootsRated/hyde.git',
                   desc: 'The template repository to use'
 
     def new(output_directory)
