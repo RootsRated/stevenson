@@ -45,24 +45,25 @@ option, like so:
 This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
 to `hello_world` and begin altering the repo based on the contents of a
 YAML file in your template's root directory named `_stevenson.yml`. This file
-should contain config options to be set in the `_config.yml` of your Jekyll
+should contain config options to be set in various files of your Jekyll
 installation along with information on whether these options should be secret,
 validated as emails, validated as URLs, or limited to a certain length.
 
 Here's an example of the YAML file:
 
     #_stevenson.yml
-    title:
-      question: 'Title: '
-      limit: 40
-    email:
-      question: 'Email: '
-      email: true
-    description:
-      question: 'Description: '
-    url:
-      question: 'URL: '
-      url: true
+    '_config.yml':
+      title:
+        question: 'Title: '
+       limit: 40
+      email:
+        question: 'Email: '
+        email: true
+      description:
+        question: 'Description: '
+      url:
+        question: 'URL: '
+        url: true
 
 This file will produce the following questions when
 `stevenson new hello_world https://github.com/YourUsername/YourTemplate.git` is
