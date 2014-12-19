@@ -16,7 +16,7 @@ describe Stevenson::Template::GitTemplate do
       let(:git_template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
 
       it 'returns a Rugged Repo' do
-        expect(git_template.repository).to be_an_instance_of Rugged::Repository
+        expect(git_template.repository).to be_an_instance_of Git::Base
       end
 
       after { git_template.cleanup }
@@ -59,7 +59,7 @@ describe Stevenson::Template::GitTemplate do
     let(:git_template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
 
     it 'returns the working directory of the repo' do
-      expect(git_template.path).to eq git_template.repository.workdir
+      expect(git_template.path).to eq git_template.repository.dir.to_s
     end
 
     after { git_template.cleanup }
@@ -69,7 +69,7 @@ describe Stevenson::Template::GitTemplate do
     let(:git_template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
 
     it 'returns the working directory of the repo' do
-      tmpdir = git_template.repository.workdir
+      tmpdir = git_template.repository.dir.to_s
       git_template.cleanup
       expect(File.exists? tmpdir).to eq false
     end
