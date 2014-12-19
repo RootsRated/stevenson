@@ -8,47 +8,74 @@ module Stevenson
         # Save the config path for later use
         @config_path = config_path
 
-        # Load config options from the template
-        @options = load_options
-        @config = load_config
-
-        # If no config is provided, set it to an empty hash
-        @config = {} unless @config
+        # Load options from the template
+        @root_options = load_yaml "#{config_path}/_stevenson.yml"
       end
 
-      def configure
-        # If there are any options, for each option, ask the user for input
-        if @options
-          @options.each do |key, value|
-            @config[key] = ask_question value, @config[key]
+      def configure(path=nil, options=nil)
+        # If no options are provided, use the root_options
+        options ||= @root_options
+
+        # If no path is provided, use the config_path
+        path ||= @config_path
+
+        # Iterate through each option provided
+        options.each do |key, value|
+          if File.directory? "#{path}/key"
+            # If the "#{path}/key" is a directory, recursively configure that
+            # directory
+            configure "#{path}/key", value
+          else
+            # If "#{path}/key" is a file, load the YAML from that file
+            config = load_yaml path
+
+            # Collect answers for the config in the file
+            config = collect_answers value, config
+
+            # And save the config back to YAML file.
+            save_yaml path, config
           end
-        end
-  
-        # Save the updated config back to the directory
-        File.open("#{@config_path}/_config.yml", 'w') do |f|
-          f.write @config.to_yaml
         end
       end
 
       private
 
-      def load_options
-        # If a _stevenson.yml file is present, load it
-        if File.file? "#{@config_path}/_stevenson.yml"
-          YAML.load_file "#{@config_path}/_stevenson.yml"
+      def collect_answers(options, config)
+        if options.is_a?(Hash)
+          # If the current option is a hash, iterate over its values
+          options.each do |key, value|
+            # If no key is present in the config, assign one
+            config[key] = {} unless config[key]
+
+            # Recursively collect answers for the current key in the config and
+            # options
+            config[key] = collect_answers value, config[key]
+          end
         else
-          # Otherwise, return false
-          false
+          # If the option is not a hash, ask the user for input set the key in
+          # the config to it
+          config[key] = ask_question value, config[key]
+        end
+
+        # Return the new config
+        config
+      end
+
+      def load_yaml(path)
+        # If a YAML file is present, load it
+        if File.file? path
+          result = YAML.load_file path
+          result = {} unless result
+        else
+          # Otherwise, return an empty hash
+          {}
         end
       end
-  
-      def load_config
-        # If a _config.yml file is present, load it
-        if File.file? "#{@config_path}/_config.yml"
-          YAML.load_file "#{@config_path}/_config.yml"
-        else
-          # Otherwise, return false
-          false
+
+      def save_yaml(path, config)
+        # Write config to path as YAML
+        File.open(path, 'w') do |f|
+          f.write config.to_yaml
         end
       end
 
