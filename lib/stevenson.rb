@@ -19,7 +19,6 @@ module Stevenson
 
       # If the template provided is valid, configure and save the template
       if template.is_valid?
-
         # Configure the template
         configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
         configurator.configure

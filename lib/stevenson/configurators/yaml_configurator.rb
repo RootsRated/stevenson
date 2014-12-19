@@ -19,22 +19,21 @@ module Stevenson
         # If no path is provided, use the config_path
         path ||= @config_path
 
-        # Iterate through each option provided
-        options.each do |key, value|
-          if File.directory? "#{path}/key"
-            # If the "#{path}/key" is a directory, recursively configure that
-            # directory
-            configure "#{path}/key", value
-          else
-            # If "#{path}/key" is a file, load the YAML from that file
-            config = load_yaml path
-
-            # Collect answers for the config in the file
-            config = collect_answers value, config
-
-            # And save the config back to YAML file.
-            save_yaml path, config
+        # If the path is a directory, recursively configure that directory
+        if File.directory? path
+          # Iterate through each option provided
+          options.each do |key, value|
+            configure "#{path}/#{key}", value
           end
+        else
+          # If path is a file, load the YAML from that file
+          config = load_yaml path
+
+          # Collect answers for the config in the file
+          config = collect_answers options, config
+
+          # And save the config back to YAML file.
+          save_yaml path, config
         end
       end
 
@@ -51,21 +50,21 @@ module Stevenson
             # options
             config[key] = collect_answers value, config[key]
           end
+
+          # Return the new config
+          config
         else
           # If the option is not a hash, ask the user for input set the key in
           # the config to it
-          config[key] = ask_question value, config[key]
+          ask_question options, config
         end
-
-        # Return the new config
-        config
       end
 
       def load_yaml(path)
         # If a YAML file is present, load it
         if File.file? path
           result = YAML.load_file path
-          result = {} unless result
+          result || {}
         else
           # Otherwise, return an empty hash
           {}
@@ -79,18 +78,10 @@ module Stevenson
         end
       end
 
-      def ask_question(options, default_value)
-        # Load the question text and highline options hash
-        question = options['question']
-        options.delete 'question'
-  
+      def ask_question(question, default_value)
         # Ask the user the question and apply all options
         answer = ask(question) do |q|
-          q.default = default_value if default_value
-          q.echo = false if options['secret']
-          q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  if options['email']
-          q.validate = /https?:\/\/[\S]+/  if options['url']
-          q.limit = options['limit'] if options['limit']
+          q.default = default_value if default_value != {}
         end
   
         # Return the user's answer
