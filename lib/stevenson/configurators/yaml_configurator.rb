@@ -40,8 +40,8 @@ module Stevenson
       private
 
       def collect_answers(options, config)
-        if options.is_a?(Hash)
-          # If the current option is a hash, iterate over its values
+        if !options['question'] || options['question'].is_a?(Hash)
+          # If the current option is not a leaf, iterate over its values
           options.each do |key, value|
             # If no key is present in the config, assign one
             config[key] = {} unless config[key]
@@ -78,10 +78,18 @@ module Stevenson
         end
       end
 
-      def ask_question(question, default_value)
+      def ask_question(options, default_value)
+        # Load the question text and highline options hash
+        question = options['question']
+        options.delete 'question'
+  
         # Ask the user the question and apply all options
         answer = ask(question) do |q|
           q.default = default_value if default_value != {}
+          q.echo = false if options['secret']
+          q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  if options['email']
+          q.validate = /https?:\/\/[\S]+/  if options['url']
+          q.limit = options['limit'] if options['limit']
         end
   
         # Return the user's answer
