@@ -63,8 +63,7 @@ module Stevenson
       def load_yaml(path)
         # If a YAML file is present, load it
         if File.file? path
-          result = YAML.load_file path
-          result || {}
+          YAML.load_file(path) || {}
         else
           # Otherwise, return an empty hash
           {}
