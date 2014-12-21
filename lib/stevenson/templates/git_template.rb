@@ -5,7 +5,7 @@ require 'yaml'
 module Stevenson
   module Template
     class GitTemplate
-      TEMPLATE_ALIASES_PATH = '../../../assets/template_aliases.yml'
+      TEMPLATE_ALIASES_PATH = File.join('..', '..', '..', 'assets', 'template_aliases.yml')
 
       def initialize(template)
         # Fetch the template_url from the template
@@ -13,7 +13,7 @@ module Stevenson
 
         # Clone the repo to a temporary directory for later use
         @tmpdir = Dir.mktmpdir
-        @repo = Git.clone template_url, "#{@tmpdir}/repo"
+        @repo = Git.clone template_url, File.join(@tmpdir, 'repo')
       rescue Git::GitExecuteError => e
         # If the given URL is not valid, set the repo to false
         @repo = false
