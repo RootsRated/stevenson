@@ -9,7 +9,7 @@ module Stevenson
         @config_path = config_path
 
         # Load options from the template
-        @root_options = load_yaml "#{config_path}/_stevenson.yml"
+        @root_options = load_yaml File.join(config_path, '_stevenson.yml')
       end
 
       def configure(path=nil, options=nil)
