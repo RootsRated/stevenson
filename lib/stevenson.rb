@@ -22,9 +22,14 @@ module Stevenson
         # Configure the template
         configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
         configurator.configure
+
+        # Jekyll Build the Directory
+        Dir.chdir(template.path) do
+          system 'jekyll b'
+        end
   
         # Copy the tempory directory to the output_directory
-        FileUtils.copy_entry template.path, output_directory
+        FileUtils.copy_entry File.join(template.path, '_site'), output_directory
       else
         say 'No git repository could be found at the provided URL.'
       end
