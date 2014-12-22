@@ -1,6 +1,6 @@
 module Stevenson
   module OutputFilters
-    module Jekyll
+    module JekyllFilter
       def output(directory)
         # Jekyll Build the Directory
         Dir.chdir(path) do

@@ -1,4 +1,4 @@
-describe Stevenson::OutputFilters::Jekyll do
+describe Stevenson::OutputFilters::JekyllFilter do
   describe '#output' do
     let(:temporary_directory) { Dir.mktmpdir }
     let(:template) { Stevenson::Template::GitTemplate.new 'https://github.com/RootsRated/stevenson-base-template.git' }

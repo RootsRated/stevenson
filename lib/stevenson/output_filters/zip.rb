@@ -2,13 +2,16 @@ require 'zip'
 
 module Stevenson
   module OutputFilters
-    module Zip
+    module ZipFilter
       def output(directory)
         # Call the parent method
         super directory
 
         # Zip up the output directory
         write directory, "#{directory}.zip"
+
+        # Remove the old directory
+        File.rm_r directory
       end
 
       private
@@ -17,10 +20,13 @@ module Stevenson
         @inputDir = inputDir
         @outputFile = outputFile
 
-        entries = Dir.entries(@inputDir); entries.delete("."); entries.delete("..")
-        io = Zip::File.open(@outputFile, Zip::File::CREATE);
+        entries = Dir.entries(@inputDir)
+        entries.delete(".")
+        entries.delete("..")
+        io = Zip::File.open(@outputFile, Zip::File::CREATE)
+
         writeEntries(entries, "", io)
-        io.close();
+        io.close()
       end
 
       def writeEntries(entries, path, io)
@@ -31,7 +37,7 @@ module Stevenson
           if File.directory?(diskFilePath)
             io.mkdir(zipFilePath)
             subdir =Dir.entries(diskFilePath); subdir.delete("."); subdir.delete("..")
-            riteEntries(subdir, zipFilePath, io)
+            writeEntries(subdir, zipFilePath, io)
           else
             io.get_output_stream(zipFilePath) { |f| f.puts(File.open(diskFilePath, "rb").read())}
           end

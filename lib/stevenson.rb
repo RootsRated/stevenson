@@ -34,10 +34,10 @@ module Stevenson
         configurator.configure
 
         # If the jekyll flag is set, compile the template output
-        template.extend(Stevenson::OutputFilters::Jekyll) if options[:jekyll]
+        template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
 
         # If the zip flag is set, zip up the template output
-        template.extend(Stevenson::OutputFilters::Zip) if options[:zip]
+        template.extend(Stevenson::OutputFilters::ZipFilter) if options[:zip]
 
         # Save the repo to the output directory
         template.output output_directory
