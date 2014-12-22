@@ -61,6 +61,21 @@ describe Stevenson::Template::GitTemplate do
     after { git_template.cleanup }
   end
 
+  describe '#output' do
+    let(:temporary_directory) { Dir.mktmpdir }
+    let(:git_template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
+
+    before do
+      git_template.output temporary_directory
+    end
+
+    it 'outputs the finished template' do
+      expect(File.exists? File.join(temporary_directory, '_config.yml')).to eq true
+    end
+
+    after { FileUtils.remove_entry_secure temporary_directory }
+  end
+
   describe '#cleanup' do
     let(:git_template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
 
