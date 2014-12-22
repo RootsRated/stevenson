@@ -1,4 +1,5 @@
 require 'stevenson/configurators/yaml_configurator'
+require 'stevenson/output_filters/jekyll'
 require 'stevenson/templates/git_template'
 require 'stevenson/version'
 require 'thor'
@@ -26,6 +27,9 @@ module Stevenson
         # Configure the template
         configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
         configurator.configure
+
+        # If the jekyll flag is set, compile the template output
+        template.extend(Stevenson::OutputFilters::Jekyll) if options[:jekyll]
 
         # Save the repo to the output directory
         template.output output_directory
