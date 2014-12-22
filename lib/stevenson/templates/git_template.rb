@@ -17,6 +17,7 @@ module Stevenson
       rescue Git::GitExecuteError => e
         # If the given URL is not valid, set the repo to false
         @repo = false
+        cleanup
       end
 
       def repository
@@ -32,6 +33,14 @@ module Stevenson
       def path
         # Return the path to the repo
         @repo.dir.to_s
+      end
+
+      def output(directory)
+        # Copy the repo to the output_directory
+        FileUtils.copy_entry path, directory
+
+        # Cleanup the temporary directory
+        cleanup
       end
 
       def cleanup
