@@ -28,8 +28,6 @@ describe Stevenson::Template::GitTemplate do
       it 'returns false' do
         expect(git_template.repository).to eq false
       end
-
-      after { git_template.cleanup }
     end
   end
 
@@ -50,8 +48,6 @@ describe Stevenson::Template::GitTemplate do
       it 'returns false' do
         expect(git_template.is_valid?).to eq false
       end
-
-      after { git_template.cleanup }
     end
   end
 
