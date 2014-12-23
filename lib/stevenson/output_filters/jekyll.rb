@@ -4,7 +4,7 @@ module Stevenson
       def output(directory)
         # Jekyll Build the Directory
         Dir.chdir(path) do
-          system 'jekyll b'
+          `jekyll b`
         end
 
         # Replace the repository with the compiled directory
