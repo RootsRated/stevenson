@@ -1,7 +1,7 @@
 describe Stevenson::OutputFilters::ZipFilter do
   describe '#output' do
     let(:temporary_directory) { Dir.mktmpdir }
-    let(:template) { Stevenson::Template::GitTemplate.new 'https://github.com/RootsRated/stevenson-base-template.git' }
+    let(:template) { Stevenson::Templates::GitTemplate.new 'https://github.com/RootsRated/stevenson-base-template.git' }
 
     before do
       template.extend(subject)

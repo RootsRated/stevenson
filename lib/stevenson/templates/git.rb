@@ -1,47 +1,28 @@
 require 'git'
-require 'stevenson/templates/bad_template_exception'
+require 'stevenson/templates/base'
 require 'tmpdir'
 require 'yaml'
 
 module Stevenson
-  module Template
-    class GitTemplate
+  module Templates
+    class GitTemplate < Base
       TEMPLATE_ALIASES_PATH = File.join('..', '..', '..', 'assets', 'template_aliases.yml')
 
       def initialize(template)
         # Fetch the template_url from the template
         template_url = load_template_url template
 
-        # Clone the repo to a temporary directory for later use
-        @tmpdir = Dir.mktmpdir
-        @repo = Git.clone template_url, File.join(@tmpdir, 'repo')
+        # Create a temporary directory to clone the repo at
+        Dir.mktmpdir do |dir|
+          # Clone the repo to a temporary directory for later use
+          Git.clone template_url, File.join(dir, 'repo')
+
+          # Call the super, thereby assigning the @path
+          super File.join(dir, 'repo')
+        end
       rescue Git::GitExecuteError => e
         # If the given URL is not valid, raise an exception and cleanup
-        raise BadTemplateException.new('Error cloning the repository')
-        cleanup
-      end
-
-      def repository
-        # Return the repo object
-        @repo
-      end
-
-      def path
-        # Return the path to the repo
-        @repo.dir.to_s
-      end
-
-      def output(directory)
-        # Copy the repo to the output_directory
-        FileUtils.copy_entry path, directory
-
-        # Cleanup the temporary directory
-        cleanup
-      end
-
-      def cleanup
-        # Cleanup the temporary directory
-        FileUtils.remove_entry_secure @tmpdir
+        raise InvalidTemplateException.new('Failed to clone the repository')
       end
 
       private
