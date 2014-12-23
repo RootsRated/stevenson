@@ -4,14 +4,13 @@ module Stevenson
   module OutputFilters
     module ZipFilter
       def output(directory)
-        # Call the parent method
-        super directory
-
-        # Zip up the output directory
-        write directory, "#{directory}.zip"
-
-        # Remove the old directory
-        File.rm_r directory
+        Dir.mktmpdir do |dir|
+          # Call the parent method
+          super dir
+  
+          # Zip up the output directory
+          write dir, directory
+        end
       end
 
       private
