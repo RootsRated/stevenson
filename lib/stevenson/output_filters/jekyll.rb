@@ -1,10 +1,12 @@
+require 'open4'
+
 module Stevenson
   module OutputFilters
     module JekyllFilter
       def output(directory)
         # Jekyll Build the Directory
         Dir.chdir(path) do
-          system 'jekyll b'
+          `jekyll b`
         end
 
         # Replace the repository with the compiled directory
