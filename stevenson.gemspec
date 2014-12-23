@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "git"
   spec.add_dependency "highline"
   spec.add_dependency "jekyll"
-  spec.add_dependency "open4"
   spec.add_dependency "rubyzip", ">= 1.0.0"
   spec.add_dependency "thor"
 end

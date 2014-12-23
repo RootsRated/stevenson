@@ -1,5 +1,3 @@
-require 'open4'
-
 module Stevenson
   module OutputFilters
     module JekyllFilter
