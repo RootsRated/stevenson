@@ -17,6 +17,11 @@ module Stevenson
         # If the given URL is not valid, raise an exception and cleanup
         raise InvalidTemplateException.new('Failed to clone the repository')
       end
+
+      def switch_branch(branch)
+        repo = Git::Base.open(path)
+        repo.checkout(branch)
+      end
     end
   end
 end
