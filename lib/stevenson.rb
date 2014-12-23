@@ -1,7 +1,7 @@
 require 'stevenson/configurators/yaml_configurator'
 require 'stevenson/output_filters/jekyll'
 require 'stevenson/output_filters/zip'
-require 'stevenson/templates/git_template'
+require 'stevenson/template_loader'
 require 'stevenson/version'
 require 'thor'
 
@@ -24,26 +24,24 @@ module Stevenson
                   desc: 'Zip compresses the output directory'
 
     def new(output_directory)
-      # Load the GitTemplate using the template option
-      template = Stevenson::Template::GitTemplate.new options[:template]
+      # Load the template using the template loader
+      template = Stevenson::TemplateLoader.load options[:template]
 
-      # If the template provided is valid, configure and save the template
-      if template.is_valid?
-        # Configure the template
-        configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
-        configurator.configure
+      # Configure the template
+      configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
+      configurator.configure
 
-        # If the jekyll flag is set, compile the template output
-        template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
+      # If the jekyll flag is set, compile the template output
+      template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
 
-        # If the zip flag is set, zip up the template output
-        template.extend(Stevenson::OutputFilters::ZipFilter) if options[:zip]
+      # If the zip flag is set, zip up the template output
+      template.extend(Stevenson::OutputFilters::ZipFilter) if options[:zip]
 
-        # Save the repo to the output directory
-        template.output output_directory
-      else
-        say 'No git repository could be found at the provided URL.'
-      end
+      # Save the repo to the output directory
+      template.output output_directory
+
+    rescue BadTemplateException => e
+      say e.message
     end
   end
 end
