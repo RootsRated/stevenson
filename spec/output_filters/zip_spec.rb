@@ -1,15 +1,15 @@
-describe Stevenson::OutputFilters::JekyllFilter do
+describe Stevenson::OutputFilters::ZipFilter do
   describe '#output' do
     let(:temporary_directory) { Dir.mktmpdir }
     let(:template) { Stevenson::Template::GitTemplate.new 'https://github.com/RootsRated/stevenson-base-template.git' }
 
     before do
       template.extend(subject)
-      template.output temporary_directory
+      template.output File.join(temporary_directory, 'archive.zip')
     end
 
-    it 'outputs a jekyll compiled directory' do
-      expect(File.exists? File.join(temporary_directory, '_config.yml')).to eq false
+    it 'outputs a zipped directory' do
+      expect(File.exists? File.join(temporary_directory, 'archive.zip')).to eq true
     end
 
     after { FileUtils.remove_entry_secure temporary_directory }

@@ -1,5 +1,6 @@
 require 'stevenson/configurators/yaml_configurator'
 require 'stevenson/output_filters/jekyll'
+require 'stevenson/output_filters/zip'
 require 'stevenson/templates/git_template'
 require 'stevenson/version'
 require 'thor'
@@ -17,6 +18,10 @@ module Stevenson
                   aliases: '-t',
                   default: 'hyde',
                   desc: 'The template repository to use'
+    method_option :zip,
+                  type: :boolean,
+                  aliases: "-z",
+                  desc: 'Zip compresses the output directory'
 
     def new(output_directory)
       # Load the GitTemplate using the template option
@@ -29,7 +34,10 @@ module Stevenson
         configurator.configure
 
         # If the jekyll flag is set, compile the template output
-        template.extend(Stevenson::OutputFilters::Jekyll) if options[:jekyll]
+        template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
+
+        # If the zip flag is set, zip up the template output
+        template.extend(Stevenson::OutputFilters::ZipFilter) if options[:zip]
 
         # Save the repo to the output directory
         template.output output_directory
