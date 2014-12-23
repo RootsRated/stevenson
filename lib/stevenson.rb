@@ -1,7 +1,7 @@
 require 'stevenson/configurators/yaml_configurator'
 require 'stevenson/output_filters/jekyll'
 require 'stevenson/output_filters/zip'
-require 'stevenson/templates/git'
+require 'stevenson/template_loader'
 require 'stevenson/version'
 require 'thor'
 
@@ -24,8 +24,8 @@ module Stevenson
                   desc: 'Zip compresses the output directory'
 
     def new(output_directory)
-      # Load the GitTemplate using the template option
-      template = Stevenson::Templates::GitTemplate.new options[:template]
+      # Load the template using the template loader
+      template = Stevenson::TemplateLoader.load options[:template]
 
       # Configure the template
       configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
