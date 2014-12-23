@@ -1,0 +1,2 @@
+class BadTemplateException < StandardError
+end

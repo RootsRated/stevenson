@@ -1,4 +1,5 @@
 require 'git'
+require 'stevenson/templates/bad_template_exception'
 require 'tmpdir'
 require 'yaml'
 
@@ -15,19 +16,14 @@ module Stevenson
         @tmpdir = Dir.mktmpdir
         @repo = Git.clone template_url, File.join(@tmpdir, 'repo')
       rescue Git::GitExecuteError => e
-        # If the given URL is not valid, set the repo to false
-        @repo = false
+        # If the given URL is not valid, raise an exception and cleanup
+        raise BadTemplateException.new('Error cloning the repository')
         cleanup
       end
 
       def repository
         # Return the repo object
         @repo
-      end
-
-      def is_valid?
-        # Return whether or not the repo was successfully cloned
-        @repo != false
       end
 
       def path
