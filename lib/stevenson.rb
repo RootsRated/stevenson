@@ -17,6 +17,9 @@ module Stevenson
                   type: :boolean,
                   aliases: '-j',
                   desc: 'Jekyll compiles the output directory'
+    method_option :subdirectory,
+                  aliases: '-s',
+                  desc: 'The subdirectory to use from the template, if any'
     method_option :template,
                   aliases: '-t',
                   default: 'hyde',
@@ -32,6 +35,9 @@ module Stevenson
 
       # If a branch is provided, switch to that branch
       template.switch_branch options[:branch]
+
+      # If a subdirectory is provided, switch to that directory
+      template.select_subdirectory options[:subdirectory]
 
       # Configure the template
       configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
