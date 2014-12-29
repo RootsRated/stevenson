@@ -1,4 +1,6 @@
-hyde:
+hyde-base:
   git: https://github.com/RootsRated/hyde.git
-rr_hyde:
+  subdirectory: base
+rr-base:
   git: https://github.com/RootsRated/rootsrated_hyde.git
+  subdirectory: base

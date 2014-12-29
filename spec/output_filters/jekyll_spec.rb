@@ -1,7 +1,7 @@
 describe Stevenson::OutputFilters::JekyllFilter do
   describe '#output' do
     let(:temporary_directory) { Dir.mktmpdir }
-    let(:template) { Stevenson::Templates::GitTemplate.new 'https://github.com/RootsRated/stevenson-base-template.git' }
+    let(:template) { Stevenson::TemplateLoader.load 'hyde-base' }
 
     before do
       template.extend(subject)
