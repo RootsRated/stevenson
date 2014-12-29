@@ -40,6 +40,27 @@ describe Stevenson::Templates::Base do
     after { FileUtils.remove_entry_secure path }
   end
 
+  describe '#select_subdirectory' do
+    let(:path) { Dir.mktmpdir }
+    let(:subdirectory) { 'subdirectory' }
+    let(:template) { subject.new path }
+
+    before do
+      Dir.mkdir File.join(path, subdirectory)
+      FileUtils.touch File.join(path, subdirectory, '_stevenson.yml')
+    end
+
+    it 'changes the path of the template to a given subdirectory' do
+      template.select_subdirectory subdirectory
+      expect(File.exists? File.join(template.path, '_stevenson.yml')).to eq true
+    end
+
+    after do
+      template.output path
+      FileUtils.remove_entry_secure path
+    end
+  end
+
   describe '#output' do
     let(:path) { Dir.mktmpdir }
     let(:template) { subject.new path }
