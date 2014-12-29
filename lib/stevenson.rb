@@ -22,7 +22,7 @@ module Stevenson
                   desc: 'The subdirectory to use from the template, if any'
     method_option :template,
                   aliases: '-t',
-                  default: 'hyde',
+                  default: 'hyde-base',
                   desc: 'The template repository to use'
     method_option :zip,
                   type: :boolean,

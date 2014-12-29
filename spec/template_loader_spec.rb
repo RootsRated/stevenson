@@ -3,7 +3,7 @@ describe Stevenson::TemplateLoader do
 
   describe '.load' do
     context 'when given a template alias' do
-      let(:template_alias) { 'hyde' }
+      let(:template_alias) { 'hyde-base' }
       let(:template) { subject.load template_alias }
 
       it 'returns the appropriate template' do

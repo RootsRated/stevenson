@@ -1,7 +1,7 @@
 describe Stevenson::OutputFilters::JekyllFilter do
   describe '#output' do
     let(:temporary_directory) { Dir.mktmpdir }
-    let(:template) { Stevenson::TemplateLoader.load 'hyde' }
+    let(:template) { Stevenson::TemplateLoader.load 'hyde-base' }
 
     before do
       template.extend(subject)
