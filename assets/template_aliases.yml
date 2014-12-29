@@ -1,2 +1,4 @@
-hyde: https://github.com/RootsRated/hyde.git
-rr_hyde: https://github.com/RootsRated/rootsrated_hyde.git
+hyde:
+  git: https://github.com/RootsRated/hyde.git
+rr_hyde:
+  git: https://github.com/RootsRated/rootsrated_hyde.git

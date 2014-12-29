@@ -11,9 +11,12 @@ module Stevenson
       if template_aliases[template_name]
         # Load a template and return it
         load_template template_aliases[template_name]
+      elsif template_name =~ /^.*\.git$/
+        # If the given string is a git url, load the git template and return it
+        Templates::GitTemplate.new template_name
       else
-        # Otherwise, return the template string
-        load_template template_name
+        # Otherwise, return a new template using the name as a path
+        Templates::Base.new template_name
       end
     end
 
@@ -25,13 +28,15 @@ module Stevenson
       template_aliases = YAML.load_file template_aliases_path
     end
 
-    def self.load_template(template_string)
-      # If the template string is a git repo, create and return a git template
-      if template_string =~ /^.*\.git$/
-        Templates::GitTemplate.new template_string
+    def self.load_template(template_options)
+      # If the template options contain a git url, load the git template and return it
+      if template_options['git']
+        template = Templates::GitTemplate.new template_options['git']
+        template.switch_branch template_options['branch'] if template_options['branch']
+        template
       else
-        # Otherwise, assume a directory, create and return a base template
-        Templates::Base.new template_string
+        # Otherwise, return false
+        false
       end
     end
   end
