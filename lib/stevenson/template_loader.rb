@@ -32,7 +32,14 @@ module Stevenson
       # If the template options contain a git url, load the git template and return it
       if template_options['git']
         template = Templates::GitTemplate.new template_options['git']
+
+        # If the alias provides a branch, switch to it
         template.switch_branch template_options['branch'] if template_options['branch']
+
+        # If the alias provides a subdirectory, switch to it
+        template.select_subdirectory template_options['subdirectory'] if template_options['subdirectory']
+
+        # Return the template
         template
       else
         # Otherwise, return false
