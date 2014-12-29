@@ -34,10 +34,10 @@ module Stevenson
       template = Stevenson::TemplateLoader.load options[:template]
 
       # If a branch is provided, switch to that branch
-      template.switch_branch options[:branch]
+      template.switch_branch options[:branch] if options[:branch]
 
       # If a subdirectory is provided, switch to that directory
-      template.select_subdirectory options[:subdirectory]
+      template.select_subdirectory options[:subdirectory] if options[:subdirectory]
 
       # Configure the template
       configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
@@ -52,7 +52,7 @@ module Stevenson
       # Save the repo to the output directory
       template.output output_directory
 
-    rescue BadTemplateException => e
+    rescue Templates::InvalidTemplateException => e
       say e.message
     end
   end
