@@ -10,7 +10,7 @@ describe Stevenson::Templates::GitTemplate do
       end
 
       it 'clones the given repository to the working template path' do
-        expect(File.exists? File.join(template.path, '_config.yml')).to eq true
+        expect(File.exists? File.join(template.path, 'base', '_config.yml')).to eq true
       end
     end
 

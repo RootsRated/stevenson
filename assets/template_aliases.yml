@@ -1,4 +1,5 @@
 hyde:
   git: https://github.com/RootsRated/hyde.git
+  subdirectory: base
 rr_hyde:
   git: https://github.com/RootsRated/rootsrated_hyde.git
