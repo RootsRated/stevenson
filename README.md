@@ -87,7 +87,7 @@ Here's an example of the YAML file:
     '_config.yml':
       title:
         question: 'Title: '
-       limit: 40
+        limit: 40
       email:
         question: 'Email: '
         email: true
