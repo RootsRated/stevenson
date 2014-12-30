@@ -22,3 +22,15 @@ templatedco-solarize:
 rr-base:
   git: https://github.com/RootsRated/rootsrated_hyde.git
   subdirectory: base
+rr-ironman:
+  git: https://github.com/RootsRated/rootsrated_hyde.git
+  subdirectory: ironman
+rr-ironwood:
+  git: https://github.com/RootsRated/rootsrated_hyde.git
+  subdirectory: ironwood
+rr-new-balance:
+  git: https://github.com/RootsRated/rootsrated_hyde.git
+  subdirectory: new-balance
+rr-ski-seattle:
+  git: https://github.com/RootsRated/rootsrated_hyde.git
+  subdirectory: ski-seattle
