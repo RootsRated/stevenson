@@ -13,17 +13,15 @@ generator.
 
 Add this line to your application's Gemfile:
 
-    gem 'stevenson', :git => 'git://github.com/RootsRated/stevenson.git'
+    gem 'stevenson'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself with:
+Or install it globally:
 
-    $ git clone git://github.com/RootsRated/stevenson.git
-    $ cd stevenson
-    $ rake install
+    $ gem install stevenson
 
 ## Usage
 
