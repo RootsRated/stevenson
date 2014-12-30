@@ -82,7 +82,8 @@ validated as emails, validated as URLs, or limited to a certain length.
 
 Here's an example of the YAML file:
 
-    #_stevenson.yml
+    # _stevenson.yml
+
     '_config.yml':
       title:
         question: 'Title: '
@@ -109,7 +110,8 @@ used:
 When these questions are answered, the following will be added to
 `hello_world/_config.yml`:
 
-    #_config.yml
+    # _config.yml
+
     title: RootsRated.com
     email: info@rootsrated.com
     description: This is a microsite created by RootsRated.com
