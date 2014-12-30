@@ -13,17 +13,15 @@ generator.
 
 Add this line to your application's Gemfile:
 
-    gem 'stevenson', :git => 'git://github.com/RootsRated/stevenson.git'
+    gem 'stevenson'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself with:
+Or install it globally:
 
-    $ git clone git://github.com/RootsRated/stevenson.git
-    $ cd stevenson
-    $ rake install
+    $ gem install stevenson
 
 ## Usage
 
@@ -122,6 +120,20 @@ input to replace these values.
 
 Any values already set in the `_config.yml` will be used as defaults for these
 questions.
+
+## Similar Projects
+
+Stevenson may not be the right tool for what you're trying to do, so here's a few
+other projects with similar ideas but slight differences:
+
+- [Octopress](http://octopress.org/) - Octopress is a build and management tool
+for jekyll sites that's more targeted at blogging and personal sites than
+microsites. Octopress is a much more complete solution for jekyll sites with a
+much bigger community, however it definitely lacks some of the simplicity and
+ease of Stevenson. If Stevenson is Sinatra, Octopress is Ruby on Rails.
+- [The Original Stevenson Project](https://github.com/dirk/stevenson) - This
+project was not a first. There was another project called Stevenson with a similar
+idea a while back, but unfortunately it hasn't been updated in over 2 years.
 
 ## Contributing
 
