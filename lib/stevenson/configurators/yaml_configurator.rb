@@ -83,15 +83,15 @@ module Stevenson
       end
 
       def prompt_for_select(options, default_value)
-        uri = URI(options['options_url'])
+        uri = URI(options['url'])
         raw_json = Net::HTTP.get uri
         json = JSON.parse raw_json
 
         list_key = options['list_key'] || ''
-        name_key = options['list_key'] || ''
-        value_key = options['list_key'] || ''
+        name_key = options['name_key'] || ''
+        value_key = options['value_key'] || ''
 
-        menu_options = get_value_from_selector json, selector
+        menu_options = get_value_from_selector json, list_key
 
         choose do |menu|
           menu.prompt = options['question']
