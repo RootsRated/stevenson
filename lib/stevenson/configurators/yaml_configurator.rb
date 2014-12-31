@@ -1,5 +1,8 @@
+require 'stevenson/inputs/email'
+require 'stevenson/inputs/password'
 require 'stevenson/inputs/select'
 require 'stevenson/inputs/text'
+require 'stevenson/inputs/url'
 require 'yaml'
 
 module Stevenson
@@ -81,6 +84,15 @@ module Stevenson
         # If the input type is a text, prepare a text input for the user
         if options['type'] == 'text'
           input = Inputs::Text.new options, default_value
+        elsif options['type'] == 'email'
+          # If the input type is a email, prepare a email input for the user
+          input = Inputs::Email.new options, default_value
+        elsif options['type'] == 'url'
+          # If the input type is a url, prepare a url input for the user
+          input = Inputs::Url.new options, default_value
+        elsif options['type'] == 'password'
+          # If the input type is a password, prepare a password input for the user
+          input = Inputs::Password.new options, default_value
         elsif options['type'] == 'select'
           # If the input type is a select, prepare a select input for the user
           input = Inputs::Select.new options, default_value
