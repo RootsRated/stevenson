@@ -1,5 +1,3 @@
-require 'json'
-require 'net/http'
 require 'stevenson/inputs/select'
 require 'stevenson/inputs/text'
 require 'yaml'

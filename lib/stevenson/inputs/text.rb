@@ -20,7 +20,7 @@ module Stevenson
           q.echo = @is_secret
           q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  if @is_email
           q.validate = /https?:\/\/[\S]+/  if @is_url
-          q.limit = options['limit'] if @limit
+          q.limit = @limit if @limit
         end
 
         # Return the user's answer

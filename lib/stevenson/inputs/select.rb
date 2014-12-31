@@ -1,4 +1,6 @@
 require 'highline/import'
+require 'json'
+require 'net/http'
 
 module Stevenson
   module Inputs
@@ -9,7 +11,7 @@ module Stevenson
         @options = options['options'] || {}
 
         # Load settings from remote sources, if any
-        load_remote_options options['url'] if options['url']
+        load_remote_options options['url'], options if options['url']
       end
 
       def collect!
@@ -25,7 +27,7 @@ module Stevenson
 
       private
 
-      def load_remote_options(url)
+      def load_remote_options(url, options)
         # Download and parse the JSON to use for options
         uri = URI(url)
         raw_json = Net::HTTP.get uri
