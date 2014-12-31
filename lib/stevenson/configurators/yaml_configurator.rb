@@ -1,4 +1,6 @@
 require 'highline/import'
+require 'json'
+require 'net/http'
 require 'yaml'
 
 module Stevenson
@@ -53,9 +55,12 @@ module Stevenson
 
           # Return the new config
           config
+        elsif options['type'] && options['type'] == 'select'
+          # If the option has a type of select, produce a selection menu
+          prompt_for_select options, config
         else
-          # If the option is not a hash, ask the user for input set the key in
-          # the config to it
+          # If the option is not a hash, assume a text question and ask the user
+          # for input set the key in the config to it
           ask_question options, config
         end
       end
@@ -77,22 +82,48 @@ module Stevenson
         end
       end
 
+      def prompt_for_select(options, default_value)
+        uri = URI(options['options_url'])
+        raw_json = Net::HTTP.get uri
+        json = JSON.parse raw_json
+
+        list_key = options['list_key'] || ''
+        name_key = options['list_key'] || ''
+        value_key = options['list_key'] || ''
+
+        menu_options = get_value_from_selector json, selector
+
+        choose do |menu|
+          menu.prompt = options['question']
+
+          menu_options.each do |menu_option|
+            name = get_value_from_selector menu_option, name_key
+            value = get_value_from_selector menu_option, value_key
+            menu.choice(name) { value }
+          end
+        end
+      end
+
       def ask_question(options, default_value)
-        # Load the question text and highline options hash
-        question = options['question']
-        options.delete 'question'
-  
         # Ask the user the question and apply all options
-        answer = ask(question) do |q|
+        answer = ask(options['question']) do |q|
           q.default = default_value if default_value != {}
           q.echo = false if options['secret']
           q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  if options['email']
           q.validate = /https?:\/\/[\S]+/  if options['url']
           q.limit = options['limit'] if options['limit']
         end
-  
+
         # Return the user's answer
         answer.to_s
+      end
+
+      def get_value_from_selector(hash, selector_string)
+        selectors = selector_string.split '.'
+        selectors.each do |selector|
+          hash = hash[selector] if hash
+        end
+        hash
       end
     end
   end
