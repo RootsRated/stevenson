@@ -1,6 +1,7 @@
-require 'highline/import'
 require 'json'
 require 'net/http'
+require 'stevenson/inputs/select'
+require 'stevenson/inputs/text'
 require 'yaml'
 
 module Stevenson
