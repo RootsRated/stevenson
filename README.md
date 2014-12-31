@@ -86,15 +86,19 @@ Here's an example of the YAML file:
 
     '_config.yml':
       title:
-        question: 'Title: '
+        type: 'text'
+        prompt: 'Title: '
         limit: 40
       email:
-        question: 'Email: '
+        type: 'text'
+        prompt: 'Email: '
         email: true
       description:
-        question: 'Description: '
+        type: 'text'
+        prompt: 'Description: '
       url:
-        question: 'URL: '
+        type: 'text'
+        prompt: 'URL: '
         url: true
 
 This file will produce the following questions when
@@ -117,8 +121,8 @@ When these questions are answered, the following will be added to
     description: This is a microsite created by RootsRated.com
     url: http://www.rootsrated.com
 
-**The 'question' of each option is required** and will be used to ask users for
-input to replace these values.
+**The 'prompt' and 'type' of each option is required** and will be used to ask
+users for input to replace these values.
 
 Any values already set in the `_config.yml` will be used as defaults for these
 questions.
