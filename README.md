@@ -90,16 +90,14 @@ Here's an example of the YAML file:
         prompt: 'Title: '
         limit: 40
       email:
-        type: 'text'
+        type: 'email'
         prompt: 'Email: '
-        email: true
       description:
         type: 'text'
         prompt: 'Description: '
       url:
-        type: 'text'
+        type: 'url'
         prompt: 'URL: '
-        url: true
 
 This file will produce the following questions when
 `stevenson new hello_world https://github.com/YourUsername/YourTemplate.git` is
