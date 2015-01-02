@@ -1,6 +1,8 @@
-require 'highline/import'
-require 'json'
-require 'net/http'
+require 'stevenson/inputs/email'
+require 'stevenson/inputs/password'
+require 'stevenson/inputs/select'
+require 'stevenson/inputs/text'
+require 'stevenson/inputs/url'
 require 'yaml'
 
 module Stevenson
@@ -42,7 +44,7 @@ module Stevenson
       private
 
       def collect_answers(options, config)
-        if !options['question'] || options['question'].is_a?(Hash)
+        if !options['type'] || options['type'].is_a?(Hash)
           # If the current option is not a leaf, iterate over its values
           options.each do |key, value|
             # If no key is present in the config, assign one
@@ -55,13 +57,9 @@ module Stevenson
 
           # Return the new config
           config
-        elsif options['type'] && options['type'] == 'select'
-          # If the option has a type of select, produce a selection menu
-          prompt_for_select options, config
         else
-          # If the option is not a hash, assume a text question and ask the user
-          # for input set the key in the config to it
-          ask_question options, config
+          # Collect the appropriate answer for the given question
+          get_input options, config
         end
       end
 
@@ -82,48 +80,29 @@ module Stevenson
         end
       end
 
-      def prompt_for_select(options, default_value)
-        uri = URI(options['url'])
-        raw_json = Net::HTTP.get uri
-        json = JSON.parse raw_json
-
-        list_key = options['list_key'] || ''
-        name_key = options['name_key'] || ''
-        value_key = options['value_key'] || ''
-
-        menu_options = get_value_from_selector json, list_key
-
-        choose do |menu|
-          menu.prompt = options['question']
-
-          menu_options.each do |menu_option|
-            name = get_value_from_selector menu_option, name_key
-            value = get_value_from_selector menu_option, value_key
-            menu.choice(name) { value }
-          end
-        end
-      end
-
-      def ask_question(options, default_value)
-        # Ask the user the question and apply all options
-        answer = ask(options['question']) do |q|
-          q.default = default_value if default_value != {}
-          q.echo = false if options['secret']
-          q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i  if options['email']
-          q.validate = /https?:\/\/[\S]+/  if options['url']
-          q.limit = options['limit'] if options['limit']
+      def get_input(options, default_value)
+        # If the input type is a text, prepare a text input for the user
+        if options['type'] == 'text'
+          input = Inputs::Text.new options, default_value
+        elsif options['type'] == 'email'
+          # If the input type is a email, prepare a email input for the user
+          input = Inputs::Email.new options, default_value
+        elsif options['type'] == 'url'
+          # If the input type is a url, prepare a url input for the user
+          input = Inputs::Url.new options, default_value
+        elsif options['type'] == 'password'
+          # If the input type is a password, prepare a password input for the user
+          input = Inputs::Password.new options, default_value
+        elsif options['type'] == 'select'
+          # If the input type is a select, prepare a select input for the user
+          input = Inputs::Select.new options, default_value
+        else
+          # Otherwise, raise an exception on the configuration file
+          raise Configurator::InvalidYAMLException.new "Type \'#{options['type']}\' is not a valid input type."
         end
 
-        # Return the user's answer
-        answer.to_s
-      end
-
-      def get_value_from_selector(hash, selector_string)
-        selectors = selector_string.split '.'
-        selectors.each do |selector|
-          hash = hash[selector] if hash
-        end
-        hash
+        # Collect and return the answer
+        input.collect!
       end
     end
   end

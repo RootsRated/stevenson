@@ -86,16 +86,18 @@ Here's an example of the YAML file:
 
     '_config.yml':
       title:
-        question: 'Title: '
+        type: 'text'
+        prompt: 'Title: '
         limit: 40
       email:
-        question: 'Email: '
-        email: true
+        type: 'email'
+        prompt: 'Email: '
       description:
-        question: 'Description: '
+        type: 'text'
+        prompt: 'Description: '
       url:
-        question: 'URL: '
-        url: true
+        type: 'url'
+        prompt: 'URL: '
 
 This file will produce the following questions when
 `stevenson new hello_world https://github.com/YourUsername/YourTemplate.git` is
@@ -117,11 +119,93 @@ When these questions are answered, the following will be added to
     description: This is a microsite created by RootsRated.com
     url: http://www.rootsrated.com
 
-**The 'question' of each option is required** and will be used to ask users for
-input to replace these values.
+The `prompt` attribute defines how the user should be prompted for input, the
+`type` attribute specifies which kind of input the prompt should accept, and any
+values already set in the `_config.yml` will be used as defaults for these
+questions. Alternatively, defaults can be overriden with a `default` attribute.
 
-Any values already set in the `_config.yml` will be used as defaults for these
-questions.
+### Input Types
+
+There are several input types available now, and hopefully, there will be more
+in the future.
+
+#### Text
+
+The most basic input is the text input. This simply accepts a text string.
+Optionally, a limit can be added with the `limit` attribute.
+
+#### Email
+
+This input is a subclass of the text input that only accepts emails as validated
+with the following regex: `/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i`.
+Additionally, Email has the same options as Text.
+
+#### Password
+
+This input is also a subclass of text, but unlike text, it will not output the
+input string to the console for added security.
+
+#### Url
+
+This input, another subclass of text, accepts only text that satisfies this
+regex: `/https?:\/\/[\S]+/`.
+
+#### Select
+
+This input prompts the user to choose from a list of given options. The options
+can be provided as subkeys to the `options` attribute like so:
+
+    favorite_color:
+      type: 'select'
+      prompt: 'Favorite Color: '
+      options:
+        'Red': '#FF0000'
+        'Blue': '#00FF00'
+        'Green': '#0000FF'
+
+The first value given is the value that will be offer to the user to choose. The
+second value is the value that will be written to `_config.yml`.
+
+Optionally, you can also fetch more options from a JSON API source using the
+`url`, `list_key`, `name_key`, and `value_key` attributes. `url` specifies the
+url to fetch json options from. `list_key` specifies the root element of the
+JSON document to iterate over for options. `name_key` specifies the name from
+each iterated item to use as a name. `value_key` specifies the value from each
+iterated item to use as a value. The following example is identical to the
+previous example using the `options` attribute:
+
+    # http://someapi.com/source.json
+
+    {
+      "response": [
+        {
+            "name": "Red",
+            "value": "#FF0000"
+        },
+        {
+            "name": "Blue",
+            "value": "#00FF00"
+        },
+        {
+            "name": "Green",
+            "value": "#0000FF"
+        }
+      ]
+    }
+
+    # _stevenson.yml
+
+    favorite_color:
+      type: 'select'
+      prompt: 'Favorite Color: '
+      url: 'http://someapi.com/source.json'
+      list_key: 'response'
+      name_key: 'name'
+      value_key: 'value'
+
+Additionally, remote sources and the `options` attribute can be used together.
+If two keys collide between the two, the remote source will always override the
+`options` attribute.
 
 ## Similar Projects
 
