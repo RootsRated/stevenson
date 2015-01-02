@@ -31,6 +31,6 @@ rr-ironwood:
 rr-new-balance:
   git: https://github.com/RootsRated/rootsrated_hyde.git
   subdirectory: new-balance
-rr-ski-seattle:
+rr-ski:
   git: https://github.com/RootsRated/rootsrated_hyde.git
-  subdirectory: ski-seattle
+  subdirectory: ski
