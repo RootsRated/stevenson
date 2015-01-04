@@ -1,8 +1,3 @@
-require 'stevenson/inputs/email'
-require 'stevenson/inputs/password'
-require 'stevenson/inputs/select'
-require 'stevenson/inputs/text'
-require 'stevenson/inputs/url'
 require 'yaml'
 
 module Stevenson

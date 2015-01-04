@@ -6,6 +6,7 @@ require 'stevenson/version'
 require 'thor'
 
 module Stevenson
+  autoload :Input, 'stevenson/input'
 
   class Application < Thor
     desc 'stevenson new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
