@@ -1,8 +1,8 @@
 require 'zip'
 
 module Stevenson
-  module OutputFilters
-    module ZipFilter
+  module OutputFilter
+    module Zip
       def output(directory)
         Dir.mktmpdir do |dir|
           # Call the parent method
