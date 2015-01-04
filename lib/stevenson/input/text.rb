@@ -1,8 +1,10 @@
 require 'highline/import'
 
 module Stevenson
-  module Inputs
+  module Input
     class Text
+      include Input::Base
+
       def initialize(options, default=nil)
         # Save the basic settings for the prompt
         @prompt = options['prompt'] || ''

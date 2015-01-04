@@ -1,14 +1,13 @@
-require 'highline/import'
-require 'stevenson/inputs/text'
-
 module Stevenson
-  module Inputs
-    class Url < Text
+  module Input
+    class Email < Text
+      include Base
+
       def collect!
         # Ask the user the question and apply the appropriate options
         answer = ask(@prompt) do |q|
           q.default = @default
-          q.validate = /https?:\/\/[\S]+/
+          q.validate = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
           q.limit = @limit if @limit
         end
 

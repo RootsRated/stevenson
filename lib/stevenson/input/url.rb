@@ -1,14 +1,13 @@
-require 'highline/import'
-require 'stevenson/inputs/text'
-
 module Stevenson
-  module Inputs
-    class Password < Text
+  module Input
+    class Url < Text
+      include Base
+
       def collect!
         # Ask the user the question and apply the appropriate options
         answer = ask(@prompt) do |q|
           q.default = @default
-          q.echo = @is_secret
+          q.validate = /https?:\/\/[\S]+/
           q.limit = @limit if @limit
         end
 

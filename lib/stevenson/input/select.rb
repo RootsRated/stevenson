@@ -1,10 +1,11 @@
-require 'highline/import'
 require 'json'
 require 'net/http'
 
 module Stevenson
-  module Inputs
+  module Input
     class Select
+      include Base
+
       def initialize(options, default=nil)
         # Save the basic settings for the prompt
         @prompt = options['prompt'] || ''
