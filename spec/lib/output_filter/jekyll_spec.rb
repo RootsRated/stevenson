@@ -1,4 +1,4 @@
-describe Stevenson::OutputFilters::JekyllFilter do
+describe Stevenson::OutputFilter::Jekyll do
   describe '#output' do
     let(:temporary_directory) { Dir.mktmpdir }
     let(:template) { Stevenson::TemplateLoader.load 'hyde-base' }
