@@ -54,7 +54,7 @@ module Stevenson
           config
         else
           # Collect the appropriate answer for the given question
-          get_input options, config
+          Input.input_for(options, default_value).collect!
         end
       end
 
@@ -73,31 +73,6 @@ module Stevenson
         File.open(path, 'w') do |f|
           f.write config.to_yaml
         end
-      end
-
-      def get_input(options, default_value)
-        # If the input type is a text, prepare a text input for the user
-        if options['type'] == 'text'
-          input = Inputs::Text.new options, default_value
-        elsif options['type'] == 'email'
-          # If the input type is a email, prepare a email input for the user
-          input = Inputs::Email.new options, default_value
-        elsif options['type'] == 'url'
-          # If the input type is a url, prepare a url input for the user
-          input = Inputs::Url.new options, default_value
-        elsif options['type'] == 'password'
-          # If the input type is a password, prepare a password input for the user
-          input = Inputs::Password.new options, default_value
-        elsif options['type'] == 'select'
-          # If the input type is a select, prepare a select input for the user
-          input = Inputs::Select.new options, default_value
-        else
-          # Otherwise, raise an exception on the configuration file
-          raise Configurator::InvalidYAMLException.new "Type \'#{options['type']}\' is not a valid input type."
-        end
-
-        # Collect and return the answer
-        input.collect!
       end
     end
   end
