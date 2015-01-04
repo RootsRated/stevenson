@@ -7,6 +7,7 @@ module Stevenson
     autoload :Url, 'stevenson/input/url'
 
     module Base
+      attr_reader :options
 
       def self.included(input)
         input.extend ClassMethods
@@ -18,6 +19,19 @@ module Stevenson
         def input_name
           name.gsub(/^.*::/, '').downcase.to_sym
         end
+      end
+
+      def initialize(options, default=nil)
+        @options, @default = options, default
+      end
+
+      def collect!
+        raise NotImplementedError
+      end
+
+      def default
+        @default ||= options['default'] if options['default']
+        @default ||=  ''
       end
     end
 
