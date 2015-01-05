@@ -10,4 +10,8 @@ module Stevenson
   def self.inputs
     @_inputs ||= {}
   end
+
+  def self.output_filters
+    @_output_filters ||= {}
+  end
 end
