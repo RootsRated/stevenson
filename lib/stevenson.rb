@@ -9,4 +9,8 @@ module Stevenson
   def self.dotfile
     @_dotfile ||= Dotfile.new
   end
+
+  def self.output_filters
+    @_output_filters ||= {}
+  end
 end

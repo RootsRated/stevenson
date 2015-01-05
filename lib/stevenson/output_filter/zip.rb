@@ -3,11 +3,13 @@ require 'zip'
 module Stevenson
   module OutputFilter
     module Zip
-      def output(directory)
+      include Base
+
+      def output
         Dir.mktmpdir do |dir|
           # Call the parent method
           super dir
-  
+
           # Zip up the output directory
           write dir, directory
         end
