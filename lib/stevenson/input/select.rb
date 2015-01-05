@@ -1,14 +1,16 @@
-require 'highline/import'
 require 'json'
 require 'net/http'
 
 module Stevenson
-  module Inputs
+  module Input
     class Select
+      include Base
+
       def initialize(options, default=nil)
+        super
+
         # Save the basic settings for the prompt
         @prompt = options['prompt'] || ''
-        @options = options['options'] || {}
 
         # Load settings from remote sources, if any
         load_remote_options options['url'], options if options['url']
@@ -19,7 +21,7 @@ module Stevenson
         choose do |menu|
           menu.prompt = @prompt
 
-          @options.each do |key, value|
+          options.each do |key, value|
             menu.choice(key) { value }
           end
         end
@@ -45,7 +47,7 @@ module Stevenson
         list_items.each do |list_item|
           name = get_value_from_selector list_item, name_key
           value = get_value_from_selector list_item, value_key
-          @options[name] = value
+          options[name] = value
         end
       end
 
