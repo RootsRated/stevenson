@@ -23,6 +23,10 @@ module Stevenson
                   desc: 'The path to related data yml files'
 
     # Output Options
+    method_option :output,
+                  type: :array,
+                  aliases: "-o",
+                  desc: 'Array of output filters to be applied in order'
     method_option :zip,
                   type: :boolean,
                   aliases: "-z",
@@ -35,10 +39,13 @@ module Stevenson
       # Place yml files
       template.place_data(options[:data]) if options[:data]
 
-      template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
-
-      # If the zip flag is set, zip up the template output
-      template.extend(Stevenson::OutputFilters::ZipFilter) if options[:zip]
+      # Run output filters, in order, against the template
+      outputs = [:jekyll]
+      outputs.concat options[:output] if options[:output]
+      outputs << :zip if options[:zip]
+      outputs.each do |filter_type|
+        template.extend(Stevenson::OutputFilter.filter_for(filter_type))
+      end
 
       # Save the repo to the output directory
       template.output output_directory
