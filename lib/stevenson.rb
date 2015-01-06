@@ -7,7 +7,8 @@ require 'stevenson/version'
 module Stevenson
   autoload :Application, 'stevenson/application'
   autoload :Input, 'stevenson/input'
+
   def self.inputs
-    @inputs ||= {}
+    @_inputs ||= {}
   end
 end
