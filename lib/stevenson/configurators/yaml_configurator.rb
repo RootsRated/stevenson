@@ -54,7 +54,7 @@ module Stevenson
           config
         else
           # Collect the appropriate answer for the given question
-          Input.input_for(options, default_value).collect!
+          Input.input_for(options).collect!
         end
       end
 

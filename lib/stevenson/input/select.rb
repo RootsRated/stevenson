@@ -7,7 +7,7 @@ module Stevenson
     class Select
       include Base
 
-      def initialize(options, default=nil)
+      def initialize(options)
         super
 
         # Save the basic settings for the prompt

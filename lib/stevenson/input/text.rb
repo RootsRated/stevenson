@@ -5,7 +5,7 @@ module Stevenson
     class Text
       include Input::Base
 
-      def initialize(options, default=nil)
+      def initialize(options)
         super
 
         # Save the basic settings for the prompt

@@ -35,11 +35,17 @@ module Stevenson
       end
     end
 
-    def input_for(options, default_value)
-      input_klass = Stevenson.inputs[options['type']]
-      raise Configurator::InvalidYAMLException.new "Type \'#{options['type']}\' is not a valid input type." unless input_klass
+    def self.input_for(options)
+      input_klass = input_klass_for(options['type'])
+      input_klass.new(options)
+    end
 
-      input_klass.new(options, default_value)
+    private
+
+    def self.input_klass_for(type)
+      Stevenson.inputs[type] || const_get(type.to_s.capitalize)
+    rescue NameError => e
+      raise NameError.new "Type '#{type}' is not a valid input type.", e
     end
   end
 end
