@@ -1,3 +1,4 @@
+require 'highline/import'
 require 'json'
 require 'net/http'
 
