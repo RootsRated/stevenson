@@ -1,7 +1,9 @@
 module Stevenson
-  module OutputFilters
-    module JekyllFilter
-      def output(directory)
+  module OutputFilter
+    module Jekyll
+      include Base
+
+      def output
         # Jekyll Build the Directory
         Dir.chdir(path) do
           `jekyll b`

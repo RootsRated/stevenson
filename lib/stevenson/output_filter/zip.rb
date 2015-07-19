@@ -1,13 +1,15 @@
 require 'zip'
 
 module Stevenson
-  module OutputFilters
-    module ZipFilter
-      def output(directory)
+  module OutputFilter
+    module Zip
+      include Base
+
+      def output
         Dir.mktmpdir do |dir|
           # Call the parent method
           super dir
-  
+
           # Zip up the output directory
           write dir, directory
         end
@@ -29,17 +31,17 @@ module Stevenson
       end
 
       def writeEntries(entries, path, io)
-        entries.each { |e|
-          zipFilePath = path == "" ? e : File.join(path, e)
+        entries.each do |entry|
+          zipFilePath = path == "" ? entry : File.join(path, entry)
           diskFilePath = File.join(@inputDir, zipFilePath)
           if File.directory?(diskFilePath)
             io.mkdir(zipFilePath)
             subdir =Dir.entries(diskFilePath); subdir.delete("."); subdir.delete("..")
             writeEntries(subdir, zipFilePath, io)
           else
-            io.get_output_stream(zipFilePath) { |f| f.puts(File.open(diskFilePath, "rb").read())}
+            io.get_output_stream(zipFilePath) { |f| f.puts(File.open(diskFilePath, "rb").read()) }
           end
-        }
+        end
       end
     end
   end

@@ -7,10 +7,6 @@ module Stevenson
     method_option :branch,
                   aliases: '-b',
                   desc: 'The git branch you would like to use from your template'
-    method_option :jekyll,
-                  type: :boolean,
-                  aliases: '-j',
-                  desc: 'Jekyll compiles the output directory'
     method_option :subdirectory,
                   aliases: '-s',
                   desc: 'The subdirectory to use from the template, if any'
@@ -18,6 +14,15 @@ module Stevenson
                   aliases: '-t',
                   default: 'hyde-base',
                   desc: 'The template repository to use'
+
+    method_option :output,
+                  type: :array,
+                  aliases: "-o",
+                  desc: 'Array of output filters to be applied in order'
+    method_option :jekyll,
+                  type: :boolean,
+                  aliases: '-j',
+                  desc: 'Jekyll compiles the output directory'
     method_option :zip,
                   type: :boolean,
                   aliases: "-z",
@@ -37,11 +42,13 @@ module Stevenson
       configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
       configurator.configure
 
-      # If the jekyll flag is set, compile the template output
-      template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
-
-      # If the zip flag is set, zip up the template output
-      template.extend(Stevenson::OutputFilters::ZipFilter) if options[:zip]
+      # Run output filters, in order, against the template
+      outputs = options[:output] || []
+      outputs << :jekyll if options[:jekyll]
+      outputs << :zip if options[:zip]
+      outputs.each do |filter_type|
+        template.extend(Stevenson::OutputFilter.filter_for(filter_type))
+      end
 
       # Save the repo to the output directory
       template.output output_directory
