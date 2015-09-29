@@ -2,7 +2,7 @@ require 'thor'
 
 module Stevenson
   class Application < Thor
-    desc 'stevenson new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
+    desc 'new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
 
     method_option :template,
                   aliases: '-t',
