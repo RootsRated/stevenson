@@ -27,12 +27,6 @@ module Stevenson
       # Load the template using the template loader
       template = Stevenson::Template.load(options[:template], options)
 
-      # If a branch is provided, switch to that branch
-      template.switch_branch options[:branch] if options[:branch]
-
-      # If a subdirectory is provided, switch to that directory
-      template.select_subdirectory options[:subdirectory] if options[:subdirectory]
-
       # If the jekyll flag is set, compile the template output
       template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
 
