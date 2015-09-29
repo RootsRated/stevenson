@@ -1,15 +1,16 @@
+require 'delegate'
 require 'hashie/mash'
 require 'yaml'
 
 module Stevenson
   class Dotfile < SimpleDelegator
 
-    TEMPLATE_PATH = File.join('..', '..', 'assets', 'stevenson_dotfile.yml')
+    TEMPLATE_PATH = File.join(File.dirname(__FILE__), '..', '..', 'assets', 'stevenson_dotfile.yml')
     DOTFILE_PATH = File.join(Dir.home, ".stevenson")
 
     class << self
       def install
-        FileUtils.copy File.join(File.dirname(__FILE__), TEMPLATE_PATH), DOTFILE_PATH
+        FileUtils.copy TEMPLATE_PATH, DOTFILE_PATH
       end
 
       def path
@@ -18,9 +19,8 @@ module Stevenson
     end
 
     def initialize
-      if File.exist?(self.class.path)
-        super Hashie::Mash.new YAML.load_file(self.class.path)
-      end
+      dotfile_path = File.exist?(self.class.path) ? self.class.path : TEMPLATE_PATH
+      super Hashie::Mash.new YAML.load_file(dotfile_path)
     end
   end
 end
