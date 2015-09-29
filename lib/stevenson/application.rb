@@ -2,7 +2,7 @@ require 'thor'
 
 module Stevenson
   class Application < Thor
-    desc 'new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
+    desc 'new PROJECT_NAME CONFIG_PATH', 'generates a Jekyll at PROJECT_NAME with a config file at CONFIG_PATH'
 
     method_option :template,
                   aliases: '-t',
@@ -32,12 +32,13 @@ module Stevenson
                   aliases: "-z",
                   desc: 'Zip compresses the output directory'
 
-    def new(output_directory)
+    def new(output_directory, config_path)
       # Load the template using the template loader
       template = Stevenson::Template.load(options[:template], options)
 
       # Place yml files
-      template.place_data(options[:data]) if options[:data]
+      template.place_config(config_path)
+      template.place_files(options[:data], '_data') if options[:data]
 
       # Run output filters, in order, against the template
       puts Stevenson::OutputFilter.generate!(template, options)

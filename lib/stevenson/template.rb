@@ -16,13 +16,13 @@ module Stevenson
         @name, @options = name, options
       end
 
-      def place_data(data)
-        action = File.directory?(data) ? :cp_r : :cp
-        FileUtils.send(action, data, local_data_directory)
+      def place_config(config_file)
+        place_files(config_file, 'config.yml')
       end
 
-      def local_data_directory
-        File.join(local_directory, '_posts')
+      def place_files(files, directory)
+        action = File.directory?(files) ? :cp_r : :cp
+        FileUtils.send(action, files, File.join(local_directory, directory))
       end
 
       def close
