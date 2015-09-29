@@ -17,6 +17,11 @@ module Stevenson
                   aliases: '-s',
                   desc: 'The subdirectory to use from the template, if any'
 
+    # Data Options
+    method_option :data,
+                  aliases: "-d",
+                  desc: 'The path to related data yml files'
+
     # Output Options
     method_option :zip,
                   type: :boolean,
@@ -26,6 +31,9 @@ module Stevenson
     def new(output_directory)
       # Load the template using the template loader
       template = Stevenson::Template.load(options[:template], options)
+
+      # Place yml files
+      template.place_data(options[:data]) if options[:data]
 
       template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
 
