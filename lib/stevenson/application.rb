@@ -40,7 +40,7 @@ module Stevenson
       # Save the repo to the output directory
       template.output output_directory
 
-    rescue Templates::InvalidTemplateException => e
+    rescue StandardError => e
       say e.message
     end
 
