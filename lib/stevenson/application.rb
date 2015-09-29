@@ -4,20 +4,24 @@ module Stevenson
   class Application < Thor
     desc 'stevenson new PROJECT_NAME', 'generates a Jekyll at PROJECT_NAME'
 
+    method_option :template,
+                  aliases: '-t',
+                  default: 'hyde-base',
+                  desc: 'The template to use'
+
+    # Template Options
     method_option :branch,
                   aliases: '-b',
                   desc: 'The git branch you would like to use from your template'
+    method_option :subdirectory,
+                  aliases: '-s',
+                  desc: 'The subdirectory to use from the template, if any'
+
+    # Output Options
     method_option :jekyll,
                   type: :boolean,
                   aliases: '-j',
                   desc: 'Jekyll compiles the output directory'
-    method_option :subdirectory,
-                  aliases: '-s',
-                  desc: 'The subdirectory to use from the template, if any'
-    method_option :template,
-                  aliases: '-t',
-                  default: 'hyde-base',
-                  desc: 'The template repository to use'
     method_option :zip,
                   type: :boolean,
                   aliases: "-z",
