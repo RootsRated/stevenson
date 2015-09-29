@@ -49,5 +49,11 @@ module Stevenson
     rescue Templates::InvalidTemplateException => e
       say e.message
     end
+
+    desc 'generate_config', 'Generates a Stevenson configuration dotfile'
+    def generate_config
+      Dotfile.install
+      puts "Generated dotfile at #{Dotfile.path}"
+    end
   end
 end
