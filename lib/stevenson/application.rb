@@ -42,6 +42,8 @@ module Stevenson
 
     rescue StandardError => e
       say e.message
+    ensure
+      template.close
     end
 
     desc 'generate_dotfile', 'Generates a Stevenson configuration dotfile'

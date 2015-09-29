@@ -15,6 +15,10 @@ module Stevenson
       def initialize(name, options = {})
         @name, @options = name, options
       end
+
+      def close
+        FileUtils.rm_rf local_directory if local_directory
+      end
     end
 
     class InvalidTemplateException < StandardError; end
