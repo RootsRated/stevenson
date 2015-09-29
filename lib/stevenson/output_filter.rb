@@ -1,7 +1,7 @@
 module Stevenson
   module OutputFilter
-    autoload :Jekyll, 'stevenson/output_filter/jekyll'
-    autoload :Zip, 'stevenson/output_filter/zip'
+    autoload :Jekyll, 'stevenson/output_filters/jekyll'
+    autoload :Zip, 'stevenson/output_filters/zip'
 
     autoload :Generator, 'stevenson/output_filter/generator'
 

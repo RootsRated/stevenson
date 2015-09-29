@@ -2,16 +2,12 @@ require 'zip'
 
 module Stevenson
   module OutputFilter
-    module Zip
-      include Base
+    class Zip < Base
 
       def output
-        Dir.mktmpdir do |dir|
-          # Call the parent method
-          super dir
-
+        "#{directory}.zip".tap do |dir|
           # Zip up the output directory
-          write dir, directory
+          write directory, dir
         end
       end
 
@@ -24,7 +20,7 @@ module Stevenson
         entries = Dir.entries(@inputDir)
         entries.delete(".")
         entries.delete("..")
-        io = Zip::File.open(@outputFile, Zip::File::CREATE)
+        io = ::Zip::File.open(@outputFile, ::Zip::File::CREATE)
 
         writeEntries(entries, "", io)
         io.close()
@@ -36,7 +32,7 @@ module Stevenson
           diskFilePath = File.join(@inputDir, zipFilePath)
           if File.directory?(diskFilePath)
             io.mkdir(zipFilePath)
-            subdir =Dir.entries(diskFilePath); subdir.delete("."); subdir.delete("..")
+            subdir = Dir.entries(diskFilePath); subdir.delete("."); subdir.delete("..")
             writeEntries(subdir, zipFilePath, io)
           else
             io.get_output_stream(zipFilePath) { |f| f.puts(File.open(diskFilePath, "rb").read()) }
