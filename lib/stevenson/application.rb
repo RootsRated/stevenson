@@ -33,10 +33,6 @@ module Stevenson
       # If a subdirectory is provided, switch to that directory
       template.select_subdirectory options[:subdirectory] if options[:subdirectory]
 
-      # Configure the template
-      configurator = Stevenson::Configurator::YAMLConfigurator.new template.path
-      configurator.configure
-
       # If the jekyll flag is set, compile the template output
       template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
 
