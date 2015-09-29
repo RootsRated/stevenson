@@ -18,10 +18,6 @@ module Stevenson
                   desc: 'The subdirectory to use from the template, if any'
 
     # Output Options
-    method_option :jekyll,
-                  type: :boolean,
-                  aliases: '-j',
-                  desc: 'Jekyll compiles the output directory'
     method_option :zip,
                   type: :boolean,
                   aliases: "-z",
@@ -31,7 +27,6 @@ module Stevenson
       # Load the template using the template loader
       template = Stevenson::Template.load(options[:template], options)
 
-      # If the jekyll flag is set, compile the template output
       template.extend(Stevenson::OutputFilters::JekyllFilter) if options[:jekyll]
 
       # If the zip flag is set, zip up the template output
