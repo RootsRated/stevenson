@@ -1,22 +1,29 @@
 template_aliases:
   hyde-base:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: base
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: base
   templatedco-exmachina:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: exmachina
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: exmachina
   templatedco-horizons:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: horizons
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: horizons
   templatedco-ion:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: ion
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: ion
   templatedco-linear:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: linear
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: linear
   templatedco-phaseshift:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: phaseshift
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: phaseshift
   templatedco-solarize:
-    git: https://github.com/RootsRated/hyde.git
-    subdirectory: solarize
+    name: https://github.com/RootsRated/hyde.git
+    options:
+      subdirectory: solarize
