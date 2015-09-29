@@ -1,37 +1,43 @@
-describe Stevenson::Templates::GitTemplate do
-  subject { Stevenson::Templates::GitTemplate }
+describe Stevenson::Template::Git do
+  let(:template_url) { 'http://www.github.com/Org/repo.git' }
+  let(:options) { Hash.new }
+  subject { described_class.new(template_url, options) }
 
-  describe '#initialize' do
-    context 'with a valid URL' do
-      let(:template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
+  describe '#local_directory' do
+    let(:tmp_dir) { '/tmp/dir/to/template' }
+    before { allow(Dir).to receive(:mktmpdir).and_return(tmp_dir) }
 
-      it 'creates a new GitTemplate' do
-        expect(template).to be_an_instance_of Stevenson::Templates::GitTemplate
+    context 'when template_url is a valid URL' do
+      let(:git_repo) { double(:git_repo) }
+      before { allow(::Git).to receive(:clone).and_return(git_repo) }
+
+      it 'returns a temp directory' do
+        expect(subject.local_directory).to eq tmp_dir
       end
 
       it 'clones the given repository to the working template path' do
-        expect(File.exists? File.join(template.path, 'base', '_config.yml')).to eq true
+        expect(::Git).to receive(:clone).with(template_url, tmp_dir)
+        subject.local_directory
+      end
+
+      context "when the :branch option is set" do
+        let(:branch) { 'test-branch' }
+        let(:options) { { branch: branch } }
+
+        it "should check out the related branch" do
+          expect(git_repo).to receive(:checkout).with(branch).and_return(true)
+          subject.local_directory
+        end
       end
     end
 
-    context 'with an invalid URL' do
-      let(:invalid_url) {  'https://github.com/RootsRated/not-a-repo.git' }
+    context 'when template_url is an invalid URL' do
+      let(:template_url) {  'not/a/repo' }
+      before { allow(::Git).to receive(:clone).and_raise(::Git::GitExecuteError) }
 
       it 'raises an invalid template exception' do
-        expect{ subject.new invalid_url }.to raise_exception(Stevenson::Templates::InvalidTemplateException)
+        expect { subject.local_directory }.to raise_exception(Stevenson::Template::InvalidTemplateException)
       end
-    end
-  end
-
-  describe '#switch_branch' do
-    let(:branch) { 'master' }
-    let(:template) { subject.new 'https://github.com/RootsRated/stevenson-base-template.git' }
-
-    before { template.switch_branch branch }
-
-    it 'checksout the repo to the given branch' do
-      repo = Git::Base.open(template.path)
-      expect(repo.current_branch).to eq branch
     end
   end
 end
