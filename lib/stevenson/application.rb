@@ -25,7 +25,7 @@ module Stevenson
 
     def new(output_directory)
       # Load the template using the template loader
-      template = Stevenson::TemplateLoader.load options[:template]
+      template = Stevenson::Template.load(options[:template], options)
 
       # If a branch is provided, switch to that branch
       template.switch_branch options[:branch] if options[:branch]
