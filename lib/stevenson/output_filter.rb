@@ -3,7 +3,9 @@ module Stevenson
     autoload :Jekyll, 'stevenson/output_filter/jekyll'
     autoload :Zip, 'stevenson/output_filter/zip'
 
-    module Base
+    autoload :Generator, 'stevenson/output_filter/generator'
+
+    class Base
       attr_reader :directory
 
       def self.included(filter)
@@ -21,6 +23,14 @@ module Stevenson
       def initialize(directory)
         @directory = directory
       end
+
+      def output
+        raise NotImplementedError
+      end
+    end
+
+    def self.generate!(template, options)
+      Generator.new(options).generate!(template)
     end
 
     def self.filter_for(type)

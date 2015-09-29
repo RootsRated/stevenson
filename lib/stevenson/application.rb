@@ -40,15 +40,7 @@ module Stevenson
       template.place_data(options[:data]) if options[:data]
 
       # Run output filters, in order, against the template
-      outputs = [:jekyll]
-      outputs.concat options[:output] if options[:output]
-      outputs << :zip if options[:zip]
-      outputs.each do |filter_type|
-        template.extend(Stevenson::OutputFilter.filter_for(filter_type))
-      end
-
-      # Save the repo to the output directory
-      template.output output_directory
+      puts Stevenson::OutputFilter.generate!(template, options)
 
     rescue StandardError => e
       say e.message
