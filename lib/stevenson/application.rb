@@ -44,8 +44,8 @@ module Stevenson
       say e.message
     end
 
-    desc 'generate_config', 'Generates a Stevenson configuration dotfile'
-    def generate_config
+    desc 'generate_dotfile', 'Generates a Stevenson configuration dotfile'
+    def generate_dotfile
       Dotfile.install
       puts "Generated dotfile at #{Dotfile.path}"
     end
