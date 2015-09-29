@@ -6,6 +6,7 @@ module Stevenson
     autoload :Loader, 'stevenson/template/loader'
 
     def self.load(template, options)
+      Loader.new(template, options).template
     end
 
     class Base
