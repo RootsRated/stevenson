@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec"
 
   spec.add_dependency "git"
+  spec.add_dependency "hashie"
   spec.add_dependency "highline"
   spec.add_dependency "jekyll"
   spec.add_dependency "rubyzip", ">= 1.0.0"

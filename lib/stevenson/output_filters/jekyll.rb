@@ -1,21 +1,14 @@
 module Stevenson
-  module OutputFilters
-    module JekyllFilter
-      def output(directory)
+  module OutputFilter
+    class Jekyll < Base
+
+      def output
         # Jekyll Build the Directory
-        Dir.chdir(path) do
+        Dir.chdir(directory) do
           `jekyll b`
         end
 
-        # Replace the repository with the compiled directory
-        Dir.mktmpdir do |dir|
-          FileUtils.cp_r File.join(path, '_site', '.'), dir
-          FileUtils.rm_r path
-          FileUtils.cp_r dir, path
-        end
-
-        # Call the parent method
-        super directory
+        File.join(directory, '_site', '.')
       end
     end
   end
