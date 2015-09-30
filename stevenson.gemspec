@@ -6,8 +6,8 @@ require 'stevenson/version'
 Gem::Specification.new do |spec|
   spec.name          = "stevenson"
   spec.version       = Stevenson::VERSION
-  spec.authors       = ["Dylan Karr"]
-  spec.email         = ["dylan@RootsRated.com"]
+  spec.authors       = ["RootsRated"]
+  spec.email         = ["developers@rootsrated.com"]
   spec.summary       = "Stevenson is a generator for Jekyll microsites created by RootsRated.com"
   spec.description   = "Stevenson is a simple generator for microsites using Jekyll"
   spec.homepage      = ""
