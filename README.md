@@ -97,3 +97,10 @@ idea a while back, but unfortunately it hasn't been updated in over 2 years.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+### Contributors
+
+- [Dylan Karr](https://github.com/dylankarr)
+- [Scott BonAmi](http://github.com/sbonami)
+
+Don't forget to check out other open-source projects from [RootsRated](http://github.com/RootsRated)!
