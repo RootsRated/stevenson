@@ -3,3 +3,6 @@ cache: bundler
 sudo: false
 rvm:
   - 2.1.2
+addons:
+  code_climate:
+    repo_token: 501db1ee30adeb1d36c5ad36fc6db62a75f7fdd43d4df3da1e55a8be7e76e179

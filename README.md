@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/RootsRated/stevenson.png)](https://travis-ci.org/RootsRated/stevenson)
 [![Gem Version](https://badge.fury.io/rb/stevenson.svg)](http://badge.fury.io/rb/stevenson)
 [![Code Climate](https://codeclimate.com/github/RootsRated/stevenson/badges/gpa.svg)](https://codeclimate.com/github/RootsRated/stevenson)
+[![Test Coverage](https://codeclimate.com/github/RootsRated/stevenson/badges/coverage.svg)](https://codeclimate.com/github/RootsRated/stevenson/coverage)
 
 Stevenson is a [Jekyll](http://jekyllrb.com) microsite generator created by
 RootsRated.com. Stevenson is named for Robert Louis Stevenson, author of *The
