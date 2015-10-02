@@ -17,7 +17,7 @@ module Stevenson
       end
 
       def place_config(config_file)
-        place_files(config_file, 'config.yml')
+        place_files(config_file, '_config.yml')
       end
 
       def place_files(files, directory)
