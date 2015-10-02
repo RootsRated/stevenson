@@ -42,7 +42,10 @@ module Stevenson
       template.place_files(options[:data], '_data') if options[:data]
 
       # Run output filters, in order, against the template
-      puts Stevenson::OutputFilter.generate!(template, options)
+      directory = Stevenson::OutputFilter.generate!(template, options)
+
+      # Run deployers against filtered template directory
+      Stevenson::Deployer.deploy(directory, options)
 
     rescue StandardError => e
       say e.message
