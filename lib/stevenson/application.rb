@@ -22,9 +22,10 @@ module Stevenson
                   aliases: "-d",
                   desc: 'The path to related data yml files'
 
-    # Output Options
+    # Output Filter Options
     method_option :output,
                   type: :array,
+                  enum: [:zip],
                   aliases: "-o",
                   desc: 'Array of output filters to be applied in order'
     method_option :zip,
