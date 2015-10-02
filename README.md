@@ -38,35 +38,6 @@ This will create a new directory in your current working directory named
 `hello_world`. This directory should be a ready-to-use Jekyll
 installation.
 
-### Jekyll Compiling
-
-Stevenson can automatically jekyll build a project and output a built directory
-using the `-j` or `--jekyll`. Following the example from above, you can use the
-following command:
-
-    $ stevenson new hello_world -j
-
-This will output a directory called `hello_world` with the built assets from the
-jekyll project created by the earlier command without the jekyll flag.
-
-### Zip Output
-
-Stevenson can also output directories as a zip archive using the `-z` or `--zip`
-flags. The following command will produce the same result as the first example
-as a zip archive:
-
-    $ stevenson new hello_world.zip -z
-
-Also, the zip flag and jekyll flag can be used together to produce a built and
-compress out like so:
-
-    $ stevenson new hello_world.zip -z -j
-
-This will output a file called `hello_world.zip` with a ready-built website.
-
-Remember that the first argument to `stevenson new` should have a `.zip` on the
-end, as stevenson will not automatically add this extension.
-
 ### Templates
 
 By default, stevenson will use RootsRated's
@@ -78,6 +49,16 @@ option, like so:
 
 This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
 to `hello_world`.
+
+### Zip Output
+
+Stevenson can output directories as a zip archive using the `-z` or `--zip`
+flags. The following command will produce a zipped version of the first
+example's result:
+
+    $ stevenson new hello_world.zip -z
+
+This will output a file called `hello_world.zip` with a ready-built website.
 
 ## Similar Projects
 
