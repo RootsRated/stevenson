@@ -1,5 +1,7 @@
 module Stevenson
   module Deployer
+    autoload :S3, 'stevenson/deployers/s3'
+
     module Base
       attr_reader :options
 
@@ -35,6 +37,7 @@ module Stevenson
 
       def deployers_for(options)
         [].tap do |deployers|
+          deployers << deployer_for(:s3) if options.keys.include?("s3")
         end
       end
 

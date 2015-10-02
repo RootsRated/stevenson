@@ -33,6 +33,12 @@ module Stevenson
                   aliases: "-z",
                   desc: 'Zip compresses the output directory'
 
+    # Deploy Options
+    method_option :s3,
+                  type: :array,
+                  banner: 'bucket key access_key access_secret',
+                  desc: 'The s3 information necessary for deploying to S3'
+
     def new(output_directory, config_path)
       # Load the template using the template loader
       template = Stevenson::Template.load(options[:template], options)
