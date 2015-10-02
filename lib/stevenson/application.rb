@@ -22,15 +22,22 @@ module Stevenson
                   aliases: "-d",
                   desc: 'The path to related data yml files'
 
-    # Output Options
+    # Output Filter Options
     method_option :output,
                   type: :array,
+                  enum: [:zip],
                   aliases: "-o",
                   desc: 'Array of output filters to be applied in order'
     method_option :zip,
                   type: :boolean,
                   aliases: "-z",
                   desc: 'Zip compresses the output directory'
+
+    # Deploy Options
+    method_option :s3,
+                  type: :array,
+                  banner: 'bucket key access_key access_secret',
+                  desc: 'The s3 information necessary for deploying to S3'
 
     def new(output_directory, config_path)
       # Load the template using the template loader
@@ -41,7 +48,10 @@ module Stevenson
       template.place_files(options[:data], '_data') if options[:data]
 
       # Run output filters, in order, against the template
-      puts Stevenson::OutputFilter.generate!(template, options)
+      directory = Stevenson::OutputFilter.generate!(template, options)
+
+      # Run deployers against filtered template directory
+      Stevenson::Deployer.deploy(directory, options)
 
     rescue StandardError => e
       say e.message

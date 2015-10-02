@@ -60,6 +60,16 @@ example's result:
 
 This will output a file called `hello_world.zip` with a ready-built website.
 
+### S3 Deploy
+
+Stevenson can deploy projects to S3 using the `--s3` flag. The following
+command will deploy the resulting output to S3:
+
+    $ stevenson new hello_world.zip --s3=bucket file_key AWS_KEY AWS_SECRET
+
+Additionally, Stevenson can use the `AWS_ACCESS_KEY_ID` and
+`AWS_SECRET_ACCESS_KEY` environment variables.
+
 ## Similar Projects
 
 Stevenson may not be the right tool for what you're trying to do, so here's a few
