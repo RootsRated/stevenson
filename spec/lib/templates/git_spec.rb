@@ -5,14 +5,19 @@ describe Stevenson::Template::Git do
 
   describe '#local_directory' do
     let(:tmp_dir) { '/tmp/dir/to/template' }
-    before { allow(Dir).to receive(:mktmpdir).and_return(tmp_dir) }
+    let(:local_tmp_dir) { '/tmp/dir/to/local_template' }
+    before { allow(Dir).to receive(:mktmpdir).and_return(tmp_dir, local_tmp_dir) }
 
     context 'when template_url is a valid URL' do
       let(:git_repo) { double(:git_repo) }
-      before { allow(::Git).to receive(:clone).and_return(git_repo) }
+      before do
+        allow(::Git).to receive(:clone).and_return(git_repo)
+        allow(File).to receive(:directory?).with(tmp_dir).and_return(true)
+        allow(FileUtils).to receive(:cp_r).with("#{tmp_dir}/.", local_tmp_dir).and_return(true)
+      end
 
       it 'returns a temp directory' do
-        expect(subject.local_directory).to eq tmp_dir
+        expect(subject.local_directory).to eq local_tmp_dir
       end
 
       it 'clones the given repository to the working template path' do
