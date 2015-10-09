@@ -23,7 +23,7 @@ module Stevenson
         end
       rescue ::Git::GitExecuteError
         # If the given repo URL is not valid, raise an exception
-        raise InvalidTemplateException.new('Failed to clone the repository')
+        raise InvalidTemplateException.new('Failed to clone the repository and/or branch')
       end
 
       def close
