@@ -30,6 +30,6 @@ module Stevenson
       end
     end
 
-    class InvalidTemplateException < StandardError; end
+    class InvalidTemplateException < Stevenson::Error; end
   end
 end

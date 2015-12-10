@@ -47,7 +47,7 @@ describe Stevenson::OutputFilter do
     context "when the filter doesn't exist" do
       it "should raise a NameError with a descriptive error message" do
         expect { Stevenson::OutputFilter.filter_for(:bad_filter) }.to raise_error do |error|
-          expect(error).to be_a(NameError)
+          expect(error).to be_a(Stevenson::Error)
           expect(error.message).to eq("Type 'bad_filter' is not a valid output type.")
           expect(error.cause).to be_a(NameError)
         end
