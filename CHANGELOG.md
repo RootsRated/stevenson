@@ -1,3 +1,6 @@
+2.2.1 (December 10th, 2015)
+ - Better capture and present Stevenson vs Ruby errors
+
 2.2.0 (October 9th, 2015)
  - Add subdirectory option to Git template
 
