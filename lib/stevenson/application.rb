@@ -53,10 +53,10 @@ module Stevenson
       # Run deployers against filtered template directory
       Stevenson::Deployer.deploy(directory, options)
 
-    rescue StandardError => e
+    rescue Stevenson::Error => e
       say e.message
     ensure
-      template.close
+      template.close if template
     end
 
     desc 'generate_dotfile', 'Generates a Stevenson configuration dotfile'

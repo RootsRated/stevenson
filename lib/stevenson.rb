@@ -4,6 +4,7 @@ module Stevenson
   autoload :Application, 'stevenson/application'
   autoload :Deployer, 'stevenson/deployer'
   autoload :Dotfile, 'stevenson/dotfile'
+  autoload :Error, 'stevenson/error'
   autoload :Template, 'stevenson/template'
   autoload :OutputFilter, 'stevenson/output_filter'
 

@@ -48,6 +48,6 @@ module Stevenson
       end
     end
 
-    class InvalidDeployerException < StandardError; end
+    class InvalidDeployerException < Stevenson::Error; end
   end
 end

@@ -36,7 +36,7 @@ module Stevenson
     def self.filter_for(type)
       Stevenson.output_filters[type] || const_get(type.to_s.capitalize)
     rescue NameError => e
-      raise NameError.new "Type '#{type}' is not a valid output type.", e
+      raise Stevenson::Error.new "Type '#{type}' is not a valid output type.", e
     end
   end
 end
