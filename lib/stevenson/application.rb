@@ -56,7 +56,7 @@ module Stevenson
     rescue Stevenson::Error => e
       say e.message
     ensure
-      template.close
+      template.close if template
     end
 
     desc 'generate_dotfile', 'Generates a Stevenson configuration dotfile'
