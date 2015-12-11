@@ -6,15 +6,21 @@ module Stevenson
   class Dotfile < SimpleDelegator
 
     TEMPLATE_PATH = File.join(File.dirname(__FILE__), '..', '..', 'assets', 'stevenson_dotfile.yml')
-    DOTFILE_PATH = File.join(Dir.home, ".stevenson")
+    DOTFILE_FILENAME = ".stevenson"
 
     class << self
       def install
-        FileUtils.copy TEMPLATE_PATH, DOTFILE_PATH
+        FileUtils.copy TEMPLATE_PATH, path
       end
 
       def path
-        DOTFILE_PATH
+        File.join(user_path, DOTFILE_FILENAME)
+      end
+
+      private
+
+      def user_path
+        Dir.home rescue ENV.fetch('HOME', "/")
       end
     end
 
