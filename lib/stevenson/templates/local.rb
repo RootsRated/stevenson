@@ -8,7 +8,7 @@ module Stevenson
       end
 
       def local_directory
-        raise InvalidTemplateException.new('The given path is not a directory') unless File.directory?(template_path)
+        raise InvalidTemplateException.new("The given path is not a directory '#{template_path}'") unless File.directory?(template_path)
 
         @_local_directory ||= Dir.mktmpdir.tap do |dir|
           directories = [template_path, options[:subdirectory], '.'].compact
