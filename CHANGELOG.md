@@ -1,3 +1,8 @@
+2.2.2 (December 11th, 2015)
+ - Add a clearer error message to Template message
+ - Refactor user directory fetch to try ENV (or default to root on
+   failure)
+
 2.2.1 (December 10th, 2015)
  - Better capture and present Stevenson vs Ruby errors
 
