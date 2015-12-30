@@ -17,7 +17,7 @@ describe Stevenson::OutputFilter::Jekyll do
 
     it 'outputs a jekyll compiled directory' do
       allow(Dir).to receive(:chdir).with(temporary_directory)
-      expect(subject.output).to eq File.join(temporary_directory, '_site', '.')
+      expect(subject.output).to eq File.join(temporary_directory, '_site')
     end
   end
 end
