@@ -5,10 +5,14 @@ module Stevenson
     class Zip < Base
 
       def output
-        "#{directory}.zip".tap do |dir|
+        File.join(directory, zip_file_name).tap do |output_zip_path|
           # Zip up the output directory
-          write directory, dir
+          write directory, output_zip_path
         end
+      end
+
+      def zip_file_name
+        "#{File.basename(directory)}.zip"
       end
 
       private
