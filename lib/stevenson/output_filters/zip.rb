@@ -35,7 +35,7 @@ module Stevenson
           zipFilePath = path == "" ? entry : File.join(path, entry)
           diskFilePath = File.join(@inputDir, zipFilePath)
           if File.directory?(diskFilePath)
-            io.mkdir(zipFilePath)
+            io.mkdir(zipFilePath) unless io.find_entry(zipFilePath)
             subdir = Dir.entries(diskFilePath); subdir.delete("."); subdir.delete("..")
             writeEntries(subdir, zipFilePath, io)
           else
