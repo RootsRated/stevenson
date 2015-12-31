@@ -6,7 +6,7 @@ module Stevenson
     autoload :Generator, 'stevenson/output_filter/generator'
 
     class Base
-      attr_reader :directory
+      attr_reader :directory, :options
 
       def self.included(filter)
         filter.extend ClassMethods
@@ -20,8 +20,8 @@ module Stevenson
         end
       end
 
-      def initialize(directory)
-        @directory = directory
+      def initialize(directory, options)
+        @directory, @options = directory, options
       end
 
       def output

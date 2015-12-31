@@ -1,7 +1,8 @@
 describe Stevenson::OutputFilter::Jekyll do
+  let(:options) { {} }
   let(:temporary_directory) { '/tmp/directory' }
   let(:template) { double(:template, local_directory: temporary_directory) }
-  subject { described_class.new(template.local_directory) }
+  subject { described_class.new(template.local_directory, options) }
 
   describe '#output' do
     it "should change into the template's directory" do
