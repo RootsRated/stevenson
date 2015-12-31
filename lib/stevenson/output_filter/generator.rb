@@ -9,7 +9,7 @@ module Stevenson
 
       def generate!(template)
         filters.inject(template.local_directory) do |rendered, filter|
-          OutputFilter.filter_for(filter).new(rendered).output
+          OutputFilter.filter_for(filter).new(rendered, options).output
         end
       end
 

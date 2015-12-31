@@ -29,7 +29,6 @@ module Stevenson
                   aliases: "-o",
                   desc: 'Array of output filters to be applied in order'
     method_option :zip,
-                  type: :boolean,
                   aliases: "-z",
                   desc: 'Zip compresses the output directory'
 

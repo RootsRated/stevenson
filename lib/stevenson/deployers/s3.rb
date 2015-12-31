@@ -13,12 +13,22 @@ module Stevenson
       end
 
       def deploy!(directory)
-        Dir.glob("#{directory}/**/*").each do |file|
+        entries_for(directory).each do |file_path, file_name|
           s3_bucket.files.create(
-            key:    File.join(deployment_key, file.partition(directory).last),
-            body:   File.read(file),
+            key:    File.join(deployment_key, file_name),
+            body:   File.read(file_path),
             public: true,
-          ) if File.file?(file)
+          ) if File.file?(file_path)
+        end
+      end
+
+      def entries_for(directory)
+        if File.file?(directory)
+          [
+            [directory, File.basename(directory)]
+          ]
+        else
+          Dir.glob("#{directory}/**/*").collect { |f| [f, f.partition(directory).last] }
         end
       end
 

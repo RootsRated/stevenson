@@ -11,7 +11,7 @@ describe Stevenson::OutputFilter::Generator do
     end
 
     it "should create a new filter for the jekyll filter's output" do
-      expect(Stevenson::OutputFilter::Jekyll).to receive(:new).with(template.local_directory).and_call_original
+      expect(Stevenson::OutputFilter::Jekyll).to receive(:new).with(template.local_directory, options).and_call_original
       subject.generate!(template)
     end
 
@@ -20,16 +20,16 @@ describe Stevenson::OutputFilter::Generator do
     end
 
     context "when more than one filter exists" do
-      let(:options) { { zip: true } }
+      let(:options) { { zip: "zip" } }
       let(:zip_filter) { double(:zip_filter, output: zip_output) }
 
       it "should build subsequent filters with the previous' output" do
-        expect(Stevenson::OutputFilter::Zip).to receive(:new).with(jekyll_output).and_return(zip_filter)
+        expect(Stevenson::OutputFilter::Zip).to receive(:new).with(jekyll_output, options).and_return(zip_filter)
         subject.generate!(template)
       end
 
       it "should return the subsequent filter's output" do
-        allow(Stevenson::OutputFilter::Zip).to receive(:new).with(jekyll_output).and_return(zip_filter)
+        allow(Stevenson::OutputFilter::Zip).to receive(:new).with(jekyll_output, options).and_return(zip_filter)
         expect(subject.generate!(template)).to eq zip_output
       end
     end

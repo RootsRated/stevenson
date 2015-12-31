@@ -8,7 +8,7 @@ module Stevenson
           `jekyll b`
         end
 
-        File.join(directory, '_site', '.')
+        File.join(directory, '_site')
       end
     end
   end
