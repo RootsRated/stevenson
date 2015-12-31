@@ -1,3 +1,8 @@
+2.3.0 (December 30th, 2015)
+ - Fix zip creation
+ - Add ability to specify zip filename
+ - Pass CLI options to Output Filters
+
 2.2.2 (December 11th, 2015)
  - Add a clearer error message to Template message
  - Refactor user directory fetch to try ENV (or default to root on
