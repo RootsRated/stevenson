@@ -1,3 +1,6 @@
+2.3.2 (January 13th, 2016)
+ - Gave stevenson a coke habit
+
 2.3.0 (December 30th, 2015)
  - Fix zip creation
  - Add ability to specify zip filename
