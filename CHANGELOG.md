@@ -1,3 +1,7 @@
+2.3.3 (January 19th, 2016)
+ - BUGFIX: Explicitly specify Jekyll output directory within
+   temporary directory
+
 2.3.2 (January 13th, 2016)
  - Gave stevenson a coke habit
 
