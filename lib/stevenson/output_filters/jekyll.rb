@@ -5,17 +5,19 @@ module Stevenson
     class Jekyll < Base
 
       def output
-        # Jekyll Build the Directory
-        command.run(source: directory)
-
-        # Return output directory
-        File.join(directory, '_site')
+        File.join(directory, '_site').tap do |output_directory|
+          # Jekyll Build the Directory
+          command.run(
+            source: directory,
+            destination: output_directory
+          )
+        end
       end
 
       private
 
       def command
-        Cocaine::CommandLine.new("jekyll", "build --source :source")
+        Cocaine::CommandLine.new("jekyll", "build --source :source --destination :destination")
       end
     end
   end
