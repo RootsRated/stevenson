@@ -9,10 +9,15 @@ module Stevenson
                   default: 'hyde-base',
                   desc: 'The template to use'
 
+    method_option :private_template,
+                  type: :array,
+                  desc: 'Private git template url and credentials. Takes priority over normal template option.'
+
     # Template Options
     method_option :branch,
                   aliases: '-b',
                   desc: 'The git branch you would like to use from your template'
+
     method_option :subdirectory,
                   aliases: '-s',
                   desc: 'The subdirectory to use from the template, if any'
@@ -28,6 +33,7 @@ module Stevenson
                   enum: [:zip],
                   aliases: "-o",
                   desc: 'Array of output filters to be applied in order'
+
     method_option :zip,
                   aliases: "-z",
                   desc: 'Zip compresses the output directory'
@@ -39,8 +45,17 @@ module Stevenson
                   desc: 'The s3 information necessary for deploying to S3'
 
     def new(output_directory, config_path)
+      if options[:private_template]
+        template_url, git_username, git_password = options[:private_template]
+        git_username ||= ENV["GITHUB_SERVICE_ACCOUNT_USERNAME"]
+        git_password ||= ENV["GITHUB_SERVICE_ACCOUNT_PASSWORD"]
+        template = template_url.gsub("github", "#{git_username}:#{git_password}@github")
+      else
+        template = options[:template]
+      end
+
       # Load the template using the template loader
-      template = Stevenson::Template.load(options[:template], options)
+      template = Stevenson::Template.load(template_url, options)
 
       # Place yml files
       template.place_config(config_path)

@@ -50,6 +50,18 @@ option, like so:
 This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
 to `hello_world`.
 
+### Private Git Templates
+
+If you'd like to use a template in a private git repo, you can pass GitHub credentials or store them in ENV variables. This will take priority over the 'template' option above.
+
+    $ stevenson new hello_world --private_template https://github.com/YourUsername/YourTemplate.git bob 123
+
+This will clone the repo at `https://github.com/YourUsername/YourTemplate.git`
+to `hello_world`.
+
+Additionally, Stevenson can use the `GITHUB_SERVICE_ACCOUNT_USERNAME` and
+`GITHUB_SERVICE_ACCOUNT_PASSWORD` environment variables.
+
 ### Zip Output
 
 Stevenson can output directories as a zip archive using the `-z` or `--zip`
