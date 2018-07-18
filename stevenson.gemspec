@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "cocaine", "~> 0.5"
   spec.add_dependency "git"
-  spec.add_dependency "fog"
+  spec.add_dependency "fog-aws", "~> 3.0"
   spec.add_dependency "hashie"
   spec.add_dependency "highline"
   spec.add_dependency "jekyll"
