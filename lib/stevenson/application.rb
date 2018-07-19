@@ -55,7 +55,7 @@ module Stevenson
       end
 
       # Load the template using the template loader
-      template = Stevenson::Template.load(template_url, options)
+      template = Stevenson::Template.load(template, options)
 
       # Place yml files
       template.place_config(config_path)

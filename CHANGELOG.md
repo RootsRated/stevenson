@@ -1,4 +1,7 @@
-2.5.0 (July 18th, 2018)
+2.5.1 (July 19th, 2018)
+ - BUGFIX: typo in application.rb regarding template name
+
+ 2.5.0 (July 18th, 2018)
  - Change fog dependency to fog-aws
 
 2.4.0 (July 17th, 2018)
