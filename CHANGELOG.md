@@ -1,3 +1,9 @@
+2.5.0 (July 18th, 2018)
+ - Change fog dependency to fog-aws
+
+2.4.0 (July 17th, 2018)
+ - Add 'private_template' option for securely passing git credentials.
+
 2.3.3 (January 19th, 2016)
  - BUGFIX: Explicitly specify Jekyll output directory within
    temporary directory
